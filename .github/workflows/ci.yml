@@ -1,0 +1,51 @@
+---
+name: CI
+
+"on":
+  # When activity on a pull request occurs
+  pull_request:
+    branches:
+      - master
+
+  # When a commit is pushed to the master branch
+  push:
+    branches:
+      - master
+
+  # Every monday at 07:00 UTC
+  schedule:
+    - cron: "0 7 * * 1"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the project
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install the dependencies
+        run: pip3 install -r requirements.txt
+
+      - name: Lint the YAML files
+        run: yamllint .
+
+      - name: Lint the Ansible files
+        run: ansible-lint
+
+      - name: Test the roles
+        run: |
+          for roledir in roles/*/molecule; do
+            pushd $(dirname $roledir)
+            echo "Testing role: $(dirname $roledir)"
+            molecule test
+            popd
+          done
+
+      - name: Test the playbook
+        run: molecule test

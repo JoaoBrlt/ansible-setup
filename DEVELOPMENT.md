@@ -1,15 +1,10 @@
-# Ansible Setup
-
-This repository contains the scripts to set up my personal workstation.
-
-## Supported distributions
-
-- [Fedora](https://fedoraproject.org/)
+# Development
 
 ## Requirements
 
 - [Git](https://git-scm.com/)
 - [Python 3](https://www.python.org/)
+- [Docker](https://docs.docker.com/engine/install/)
 
 ## Setup
 
@@ -37,14 +32,31 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Usage
+## Lint
 
-- Run the playbook:
+- Lint the YAML files:
 
 ```bash
-ansible-playbook main.yml
+yamllint .
 ```
 
-## License
+- Lint the Ansible files:
 
-This project is licensed under the GPLv3 License - see the [LICENSE](LICENSE) file for details.
+```bash
+ansible-lint
+```
+
+## Test
+
+- Test a role:
+
+```bash
+cd roles/...
+molecule test
+```
+
+- Test the playbook:
+
+```bash
+molecule test
+```

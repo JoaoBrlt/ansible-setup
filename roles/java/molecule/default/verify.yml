@@ -1,0 +1,18 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Get the Java version
+      ansible.builtin.shell: |
+        set -o pipefail
+        java -version 2>&1 | grep version | awk '{print $3}' | sed 's/"//g'
+      register: java_version
+      changed_when: false
+
+    - name: Check the Java version
+      ansible.builtin.assert:
+        that:
+          - java_version.stdout is version('17', '>=')
+          - java_version.stdout is version('18', '<')
+        success_msg: JDK 17 is installed
+        fail_msg: JDK 17 is not installed

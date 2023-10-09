@@ -1,0 +1,19 @@
+---
+- name: Get the distribution identifier
+  ansible.builtin.shell: "echo $(. /etc/os-release; echo $ID)"
+  register: distribution_id
+  changed_when: false
+
+- name: Add the Adoptium repository
+  ansible.builtin.yum_repository:
+    name: adoptium
+    description: Adoptium
+    baseurl: https://packages.adoptium.net/artifactory/rpm/{{ distribution_id.stdout }}/$releasever/$basearch
+    enabled: true
+    gpgcheck: true
+    gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
+
+- name: Install JDK {{ java_version }}
+  ansible.builtin.dnf:
+    name: temurin-{{ java_version }}-jdk
+    state: present

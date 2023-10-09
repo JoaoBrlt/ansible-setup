@@ -1,8 +1,15 @@
 ---
-- name: Setup
+- name: Development tools
   hosts: all
+  roles:
+    - role: java
+      java_version: 8
+      tags: ["java"]
 
-  tasks:
-    - name: Print debug message
-      ansible.builtin.debug:
-        msg: Hello, world!
+    - role: java
+      java_version: 11
+      tags: ["java"]
+
+    - role: java
+      java_version: 17
+      tags: ["java"]
