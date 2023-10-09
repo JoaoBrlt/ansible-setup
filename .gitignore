@@ -1,0 +1,13 @@
+# Python
+venv/
+.venv/
+
+# IntelliJ IDEA
+.idea/
+
+# VS Code
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
