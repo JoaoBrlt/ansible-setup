@@ -6,7 +6,7 @@
 - [Python 3](https://www.python.org/)
 - [Docker](https://docs.docker.com/engine/install/)
 
-## Setup
+## Installation
 
 - Clone the repository:
 
@@ -32,7 +32,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Lint
+## Linting
 
 - Lint the YAML files:
 
@@ -46,7 +46,7 @@ yamllint .
 ansible-lint
 ```
 
-## Test
+## Testing
 
 - Test a role:
 

@@ -11,7 +11,7 @@ This repository contains the scripts to set up my personal workstation.
 - [Git](https://git-scm.com/)
 - [Python 3](https://www.python.org/)
 
-## Setup
+## Installation
 
 - Clone the repository:
 
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 - Run the playbook:
 
 ```bash
-ansible-playbook main.yml
+ansible-playbook main.yml --ask-become-pass
 ```
 
 ## License
