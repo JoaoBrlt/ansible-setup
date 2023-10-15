@@ -13,3 +13,6 @@
     - role: java
       java_version: 17
       tags: ["java"]
+
+    - role: maven
+      tags: ["maven"]

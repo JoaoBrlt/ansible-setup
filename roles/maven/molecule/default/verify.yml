@@ -1,0 +1,7 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check that Maven is installed
+      ansible.builtin.command: bash -lc 'mvn -version'  # Using Bash to make sure environment variables are set
+      changed_when: false
