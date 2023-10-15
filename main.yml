@@ -2,6 +2,10 @@
 - name: Development tools
   hosts: all
   roles:
+    - role: zsh
+      zsh_default_shell: true
+      tags: ["zsh"]
+
     - role: java
       java_version: 8
       tags: ["java"]
