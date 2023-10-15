@@ -12,11 +12,13 @@
     enabled: true
     gpgcheck: true
     gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
+  become: true
 
 - name: Install JDK {{ java_version }}
   ansible.builtin.dnf:
     name: temurin-{{ java_version }}-jdk
     state: present
+  become: true
 
 - name: Create the profile script
   ansible.builtin.template:
@@ -26,3 +28,4 @@
     group: root
     mode: 0644
   changed_when: false
+  become: true
