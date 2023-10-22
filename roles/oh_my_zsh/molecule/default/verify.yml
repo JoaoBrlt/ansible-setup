@@ -2,14 +2,14 @@
 - name: Verify
   hosts: all
   tasks:
-    - name: Check the Oh My Zsh installation directory
+    - name: Check Oh My Zsh installation directory
       ansible.builtin.stat:
         path: "~/.oh-my-zsh"
-      register: install_dir
+      register: oh_my_zsh_install_dir
 
     - name: Check that Oh My Zsh is installed
       ansible.builtin.assert:
         that:
-          - install_dir.stat.exists
+          - oh_my_zsh_install_dir.stat.exists
         success_msg: Oh My Zsh is installed
         fail_msg: Oh My Zsh is not installed

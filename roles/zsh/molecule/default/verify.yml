@@ -6,16 +6,14 @@
       ansible.builtin.command: zsh --version
       changed_when: false
 
-    - name: Get the default shell
-      ansible.builtin.shell: |
-        set -o pipefail
-        getent passwd root | awk -F: '{print $7}'
-      register: default_shell
+    - name: Get Zsh installation path
+      ansible.builtin.command: which zsh
+      register: zsh_install_path
       changed_when: false
 
     - name: Check that Zsh is the default shell
       ansible.builtin.assert:
         that:
-          - default_shell.stdout == '/bin/zsh'
+          - ansible_user_shell == zsh_install_path.stdout
         success_msg: Zsh is the default shell
         fail_msg: Zsh is not the default shell

@@ -11,12 +11,12 @@
     state: present
   become: true
 
-- name: Check if Oh My Zsh is already installed
+- name: Check Oh My Zsh installation directory
   ansible.builtin.stat:
     path: "~/.oh-my-zsh"
-  register: install_dir
+  register: oh_my_zsh_install_dir
 
 - name: Install Oh My Zsh
   ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  when: not install_dir.stat.exists
+  when: not oh_my_zsh_install_dir.stat.exists
   changed_when: true

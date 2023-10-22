@@ -5,9 +5,14 @@
     state: present
   become: true
 
+- name: Get Zsh installation path
+  ansible.builtin.command: which zsh
+  register: zsh_install_path
+  changed_when: false
+
 - name: Set Zsh as the default shell
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
-    shell: /bin/zsh
+    shell: "{{ zsh_install_path.stdout }}"
   become: true
   when: zsh_default_shell
