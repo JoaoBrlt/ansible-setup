@@ -8,7 +8,7 @@ driver:
 platforms:
   - name: fedora38
     image: geerlingguy/docker-fedora38-ansible:latest
-    command: ""
+    command: ''
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     cgroupns_mode: host

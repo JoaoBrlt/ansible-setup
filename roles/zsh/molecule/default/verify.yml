@@ -6,7 +6,7 @@
       ansible.builtin.command: zsh --version
       changed_when: false
 
-    - name: Get Zsh installation path
+    - name: Get the Zsh installation path
       ansible.builtin.command: which zsh
       register: zsh_install_path
       changed_when: false

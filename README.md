@@ -4,7 +4,7 @@ This repository contains the scripts to set up my personal workstation.
 
 ## Supported distributions
 
-- [Fedora](https://fedoraproject.org/)
+- [Fedora 38](https://fedoraproject.org/)
 
 ## Requirements
 

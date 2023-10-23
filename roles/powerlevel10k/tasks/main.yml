@@ -1,0 +1,50 @@
+---
+- name: Create the fonts directory
+  ansible.builtin.file:
+    path: /usr/share/fonts
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+
+- name: Download and install the MesloLGS NF Regular font
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+    dest: /usr/share/fonts/MesloLGS NF Regular.ttf
+    mode: '0644'
+  become: true
+
+- name: Download and install the MesloLGS NF Bold font
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+    dest: /usr/share/fonts/MesloLGS NF Bold.ttf
+    mode: '0644'
+  become: true
+
+- name: Download and install the MesloLGS NF Italic font
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+    dest: /usr/share/fonts/MesloLGS NF Italic.ttf
+    mode: '0644'
+  become: true
+
+- name: Download and install the MesloLGS NF Bold Italic font
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+    dest: /usr/share/fonts/MesloLGS NF Bold Italic.ttf
+    mode: '0644'
+  become: true
+
+- name: Install the Powerlevel10k theme
+  ansible.builtin.git:
+    repo: https://github.com/romkatv/powerlevel10k.git
+    dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
+    depth: 1
+    version: master
+
+- name: Enable the Powerlevel10k theme
+  ansible.builtin.replace:
+    path: ~/.zshrc
+    regexp: ^ZSH_THEME="[^"]*"
+    replace: ZSH_THEME="powerlevel10k/powerlevel10k"

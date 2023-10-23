@@ -5,4 +5,4 @@
     - role: java
       java_version: 17
 
-    - role: maven
+    - maven

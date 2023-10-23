@@ -6,3 +6,5 @@
       zsh_default_shell: true
 
     - oh_my_zsh
+
+    - powerlevel10k

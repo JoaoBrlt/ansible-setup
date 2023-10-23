@@ -1,0 +1,29 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check the Powerlevel10k installation directory
+      ansible.builtin.stat:
+        path: ~/.oh-my-zsh/custom/themes/powerlevel10k
+      register: powerlevel10k_install_dir
+
+    - name: Check that Powerlevel10k is installed
+      ansible.builtin.assert:
+        that:
+          - powerlevel10k_install_dir.stat.exists
+        success_msg: Powerlevel10k is installed
+        fail_msg: Powerlevel10k is not installed
+
+    - name: Check the Zsh enabled theme
+      ansible.builtin.shell: |
+        set -o pipefail
+        cat ~/.zshrc | grep 'ZSH_THEME="[^"]*"'
+      register: zsh_theme
+      changed_when: false
+
+    - name: Check that Powerlevel10 is enabled
+      ansible.builtin.assert:
+        that:
+          - '"powerlevel10k/powerlevel10k" in zsh_theme.stdout'
+        success_msg: Powerlevel10k is enabled
+        fail_msg: Powerlevel10k is not enabled

@@ -2,6 +2,10 @@
 
 Installs [Apache Maven](https://maven.apache.org/).
 
+## Dependencies
+
+- [Java](https://www.java.com/fr/)
+
 ## Examples
 
 ```yaml
