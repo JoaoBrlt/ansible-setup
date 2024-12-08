@@ -1,6 +1,6 @@
 ansible
 ansible-core
-ansible-lint
+ansible-lint==24.10.0
 molecule
 molecule-docker
-yamllint
+pytest-testinfra

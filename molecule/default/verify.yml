@@ -1,9 +1,0 @@
----
-- name: Verify
-  hosts: all
-  tasks:
-    - name: Test
-      ansible.builtin.assert:
-        that:
-          - true
-        success_msg: All tests passed
