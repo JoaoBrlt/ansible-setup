@@ -4,7 +4,7 @@ This repository contains the scripts to set up my personal workstation.
 
 ## Supported distributions
 
-- [Fedora 38](https://fedoraproject.org/)
+- [Ubuntu 24.04](https://ubuntu.com)
 
 ## Requirements
 
@@ -22,19 +22,19 @@ git clone https://github.com/JoaoBrlt/ansible-setup.git
 - Create a virtual environment:
 
 ```bash
-python -m venv venv
+python3 -m .venv venv
 ```
 
 - Activate the virtual environment:
 
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 - Install the dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Usage

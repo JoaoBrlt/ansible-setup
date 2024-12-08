@@ -3,4 +3,4 @@ ansible-core
 ansible-lint
 molecule
 molecule-docker
-yamllint
+pytest-testinfra

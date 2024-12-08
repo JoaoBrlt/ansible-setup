@@ -2,27 +2,7 @@
 - name: Development tools
   hosts: all
   roles:
-    - role: zsh
-      zsh_default_shell: true
-      tags: [zsh]
-
-    - role: oh_my_zsh
-      tags: [zsh]
-
-    - role: powerlevel10k
-      tags: [zsh]
-
     - role: java
-      java_version: 8
-      tags: [java]
-
-    - role: java
-      java_version: 11
-      tags: [java]
-
-    - role: java
-      java_version: 17
-      tags: [java]
+      java_version: 21
 
     - role: maven
-      tags: [java]

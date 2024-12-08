@@ -17,30 +17,24 @@ git clone https://github.com/JoaoBrlt/ansible-setup.git
 - Create a virtual environment:
 
 ```bash
-python -m venv venv
+python3 -m venv .venv
 ```
 
 - Activate the virtual environment:
 
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 - Install the dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Linting
 
-- Lint the YAML files:
-
-```bash
-yamllint .
-```
-
-- Lint the Ansible files:
+- Lint the code:
 
 ```bash
 ansible-lint
