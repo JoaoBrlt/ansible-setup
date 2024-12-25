@@ -1,15 +1,10 @@
-# Ansible Setup
-
-This repository contains the scripts to set up my personal workstation.
-
-## Supported distributions
-
-- [Ubuntu 24.04](https://ubuntu.com)
+# Development
 
 ## Requirements
 
 - [Git](https://git-scm.com/)
 - [Python 3](https://www.python.org/)
+- [Docker](https://docs.docker.com/engine/install/)
 
 ## Installation
 
@@ -37,14 +32,25 @@ source .venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-## Usage
+## Linting
 
-- Run the playbook:
+- Lint the code:
 
 ```bash
-ansible-playbook main.yml --ask-become-pass
+ansible-lint
 ```
 
-## License
+## Testing
 
-This project is licensed under the GPLv3 License - see the [LICENSE](LICENSE) file for details.
+- Test a role:
+
+```bash
+cd roles/...
+molecule test
+```
+
+- Test the playbook:
+
+```bash
+molecule test
+```

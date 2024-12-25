@@ -1,0 +1,97 @@
+---
+name: CI
+
+"on":
+  # Manual trigger
+  workflow_dispatch:
+
+  # When a commit is pushed to the master branch
+  push:
+    branches:
+      - master
+
+  # Every week
+  schedule:
+    - cron: "0 8 * * 5"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the project
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Install the dependencies
+        run: pip3 install -r requirements.txt
+
+      - name: Lint the code
+        run: ansible-lint
+
+  detect_roles:
+    name: Detect roles
+    needs: lint
+    runs-on: ubuntu-latest
+
+    outputs:
+      roles: ${{ steps.detect_roles.outputs.roles }}
+
+    steps:
+      - name: Checkout the project
+        uses: actions/checkout@v4
+
+      - name: Detect the roles
+        id: detect_roles
+        run: echo "roles=$(ls -d * | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
+        working-directory: ./roles
+
+  test_roles:
+    name: Test roles
+    needs: detect_roles
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        role: ${{ fromJson(needs.detect_roles.outputs.roles) }}
+
+    steps:
+      - name: Checkout the project
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Install the dependencies
+        run: pip3 install -r requirements.txt
+
+      - name: Test the role
+        run: molecule test
+        working-directory: ./roles/${{ matrix.role }}
+
+  test_playbook:
+    name: Test playbook
+    needs: test_roles
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the project
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Install the dependencies
+        run: pip3 install -r requirements.txt
+
+      - name: Test the playbook
+        run: molecule test

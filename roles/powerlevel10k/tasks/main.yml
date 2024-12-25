@@ -1,0 +1,73 @@
+---
+- name: Create the fonts directory
+  ansible.builtin.file:
+    path: /usr/share/fonts
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+
+- name: Download and install the MesloLGS NF Regular font
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+    dest: /usr/share/fonts/MesloLGS NF Regular.ttf
+    mode: '0644'
+  become: true
+
+- name: Download and install the MesloLGS NF Bold font
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+    dest: /usr/share/fonts/MesloLGS NF Bold.ttf
+    mode: '0644'
+  become: true
+
+- name: Download and install the MesloLGS NF Italic font
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+    dest: /usr/share/fonts/MesloLGS NF Italic.ttf
+    mode: '0644'
+  become: true
+
+- name: Download and install the MesloLGS NF Bold Italic font
+  ansible.builtin.get_url:
+    url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+    dest: /usr/share/fonts/MesloLGS NF Bold Italic.ttf
+    mode: '0644'
+  become: true
+
+- name: Install the Powerlevel10k theme
+  ansible.builtin.git:
+    repo: https://github.com/romkatv/powerlevel10k.git
+    dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
+    depth: 1
+    version: master
+
+- name: Enable the Powerlevel10k theme
+  ansible.builtin.replace:
+    path: ~/.zshrc
+    regexp: ^ZSH_THEME="[^"]*"
+    replace: ZSH_THEME="powerlevel10k/powerlevel10k"
+
+- name: Copy the Powerlevel10k theme configuration
+  ansible.builtin.copy:
+    src: .p10k.zsh
+    dest: ~/.p10k.zsh
+    mode: '0644'
+
+- name: Check if the Powerlevel10k theme is already configured
+  ansible.builtin.lineinfile:
+    path: ~/.zshrc
+    regexp: "source ~/\\.p10k\\.zsh"
+    state: absent
+  check_mode: true
+  changed_when: false
+  register: is_theme_configured
+
+- name: Configure the Powerlevel10k theme
+  ansible.builtin.lineinfile:
+    path: ~/.zshrc
+    line: |
+      # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+  when: is_theme_configured.found == 0
