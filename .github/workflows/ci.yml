@@ -48,8 +48,7 @@ jobs:
 
       - name: Detect the roles
         id: detect_roles
-        run: echo "roles=$(ls -d * | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
-        working-directory: ./roles
+        run: echo "roles=$(ls -d ./roles/*/molecule | awk -F '/' '{print $3}' | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
 
   test_roles:
     name: Test roles

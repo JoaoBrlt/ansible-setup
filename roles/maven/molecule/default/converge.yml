@@ -2,7 +2,8 @@
 - name: Converge
   hosts: all
   roles:
-    - role: java
-      java_version: 21
+    - role: sdkman
+      sdkman_java_versions:
+        - { version: 21, default: true }
 
     - maven

@@ -5,7 +5,7 @@
     cache_valid_time: 3600
   become: true
 
-- name: Install Git
+- name: Install the dependencies
   ansible.builtin.apt:
     name: git
     state: present
@@ -24,7 +24,7 @@
   when: not install_dir.stat.exists
 
 - name: Install Oh My Zsh
-  ansible.builtin.command: /tmp/install_ohmyzsh.sh --unattended
+  ansible.builtin.command: /bin/sh /tmp/install_ohmyzsh.sh --unattended
   when: not install_dir.stat.exists
   changed_when: true
 

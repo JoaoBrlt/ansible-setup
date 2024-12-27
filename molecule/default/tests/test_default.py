@@ -15,13 +15,13 @@ def test_oh_my_zsh_installed(host):
   assert install_dir.exists
   assert install_dir.is_directory
 
-def test_zsh_autosuggestions_installed(host):
+def test_oh_my_zsh_zsh_autosuggestions_installed(host):
   env_vars = host.environment()
   plugin_dir = host.file(env_vars["HOME"] + "/.oh-my-zsh/custom/plugins/zsh-autosuggestions")
   assert plugin_dir.exists
   assert plugin_dir.is_directory
 
-def test_zsh_syntax_highlighting_installed(host):
+def test_oh_my_zsh_zsh_syntax_highlighting_installed(host):
   env_vars = host.environment()
   plugin_dir = host.file(env_vars["HOME"] + "/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting")
   assert plugin_dir.exists
@@ -39,9 +39,11 @@ def test_powerlevel10k_configured(host):
   assert config_file.exists
   assert config_file.is_file
 
-def test_java_installed(host):
-  java = host.package("temurin-21-jdk")
-  assert java.is_installed
+def test_sdkman_installed(host):
+  env_vars = host.environment()
+  install_dir = host.file(env_vars["HOME"] + "/.sdkman")
+  assert install_dir.exists
+  assert install_dir.is_directory
 
 def test_maven_installed(host):
   maven = host.package("maven")

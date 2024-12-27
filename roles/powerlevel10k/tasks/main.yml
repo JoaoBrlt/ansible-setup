@@ -12,6 +12,8 @@
   ansible.builtin.get_url:
     url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
     dest: /usr/share/fonts/MesloLGS NF Regular.ttf
+    owner: root
+    group: root
     mode: '0644'
   become: true
 
@@ -19,6 +21,8 @@
   ansible.builtin.get_url:
     url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
     dest: /usr/share/fonts/MesloLGS NF Bold.ttf
+    owner: root
+    group: root
     mode: '0644'
   become: true
 
@@ -26,6 +30,8 @@
   ansible.builtin.get_url:
     url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
     dest: /usr/share/fonts/MesloLGS NF Italic.ttf
+    owner: root
+    group: root
     mode: '0644'
   become: true
 
@@ -33,6 +39,8 @@
   ansible.builtin.get_url:
     url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
     dest: /usr/share/fonts/MesloLGS NF Bold Italic.ttf
+    owner: root
+    group: root
     mode: '0644'
   become: true
 
@@ -60,9 +68,9 @@
     path: ~/.zshrc
     regexp: "source ~/\\.p10k\\.zsh"
     state: absent
+  register: is_theme_configured
   check_mode: true
   changed_when: false
-  register: is_theme_configured
 
 - name: Configure the Powerlevel10k theme
   ansible.builtin.lineinfile:
