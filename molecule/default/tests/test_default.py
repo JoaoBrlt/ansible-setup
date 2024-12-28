@@ -63,3 +63,6 @@ def test_keepassxc_installed(host):
   keepassxc = host.package("keepassxc")
   assert keepassxc.is_installed
 
+def test_vlc_installed(host):
+  vlc = host.package("vlc")
+  assert vlc.is_installed
