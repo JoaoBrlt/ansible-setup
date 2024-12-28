@@ -66,3 +66,7 @@ def test_keepassxc_installed(host):
 def test_vlc_installed(host):
   vlc = host.package("vlc")
   assert vlc.is_installed
+
+def test_signal_installed(host):
+  signal = host.package("signal-desktop")
+  assert signal.is_installed
