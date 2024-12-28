@@ -58,3 +58,8 @@ def test_maven_installed(host):
 def test_docker_installed(host):
   docker = host.package("docker-ce")
   assert docker.is_installed
+
+def test_keepassxc_installed(host):
+  keepassxc = host.package("keepassxc")
+  assert keepassxc.is_installed
+

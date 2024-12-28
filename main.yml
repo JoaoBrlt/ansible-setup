@@ -24,3 +24,5 @@
     - maven
 
     - docker
+
+    - keepassxc
