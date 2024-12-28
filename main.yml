@@ -22,3 +22,5 @@
         - { version: 21, default: true }
 
     - maven
+
+    - docker

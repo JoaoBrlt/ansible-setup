@@ -54,3 +54,7 @@ def test_sdkman_installed(host):
 def test_maven_installed(host):
   maven = host.package("maven")
   assert maven.is_installed
+
+def test_docker_installed(host):
+  docker = host.package("docker-ce")
+  assert docker.is_installed
