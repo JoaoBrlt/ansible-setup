@@ -63,19 +63,19 @@
     dest: ~/.p10k.zsh
     mode: '0644'
 
-- name: Check if the Powerlevel10k theme is already configured
+- name: Check if the Powerlevel10k theme configuration is already loaded
   ansible.builtin.lineinfile:
     path: ~/.zshrc
     regexp: "source ~/\\.p10k\\.zsh"
     state: absent
-  register: is_theme_configured
+  register: is_config_loaded
   check_mode: true
   changed_when: false
 
-- name: Configure the Powerlevel10k theme
+- name: Load the Powerlevel10k theme configuration
   ansible.builtin.lineinfile:
     path: ~/.zshrc
     line: |
       # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-  when: is_theme_configured.found == 0
+  when: is_config_loaded.found == 0
