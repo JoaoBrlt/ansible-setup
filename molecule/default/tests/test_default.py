@@ -59,6 +59,10 @@ def test_docker_installed(host):
   docker = host.package("docker-ce")
   assert docker.is_installed
 
+def test_solaar_installed(host):
+  solaar = host.package("solaar")
+  assert solaar.is_installed
+
 def test_keepassxc_installed(host):
   keepassxc = host.package("keepassxc")
   assert keepassxc.is_installed
