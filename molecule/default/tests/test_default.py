@@ -39,6 +39,10 @@ def test_powerlevel10k_configured(host):
   assert config_file.exists
   assert config_file.is_file
 
+def test_guake_installed(host):
+  guake = host.package("guake")
+  assert guake.is_installed
+
 def test_nvm_installed(host):
   env_vars = host.environment()
   install_dir = host.file(env_vars["HOME"] + "/.nvm")
@@ -63,13 +67,13 @@ def test_google_chrome_installed(host):
   google_chrome = host.package("google-chrome-stable")
   assert google_chrome.is_installed
 
-def test_solaar_installed(host):
-  solaar = host.package("solaar")
-  assert solaar.is_installed
-
 def test_keepassxc_installed(host):
   keepassxc = host.package("keepassxc")
   assert keepassxc.is_installed
+
+def test_solaar_installed(host):
+  solaar = host.package("solaar")
+  assert solaar.is_installed
 
 def test_vlc_installed(host):
   vlc = host.package("vlc")
