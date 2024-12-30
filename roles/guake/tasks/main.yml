@@ -25,4 +25,4 @@
 
 - name: Restore the Guake preferences
   ansible.builtin.command: guake --restore-preferences=/tmp/guake.cfg
-  changed_when: false # To avoid the task to be marked as changed even when the preferences did not change
+  changed_when: false # To avoid the task being marked as changed even when the preferences did not change

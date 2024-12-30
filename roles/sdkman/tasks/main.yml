@@ -7,7 +7,7 @@
 
 - name: Install the dependencies
   ansible.builtin.apt:
-    pkg:
+    name:
       - curl
       - tar
       - zip

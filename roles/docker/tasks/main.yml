@@ -7,14 +7,14 @@
 
 - name: Install the dependencies
   ansible.builtin.apt:
-    pkg:
+    name:
       - apt-transport-https
       - ca-certificates
       - gpg
     state: present
   become: true
 
-- name: Create the apt keyrings directory
+- name: Create the APT keyrings directory
   ansible.builtin.file:
     path: /etc/apt/keyrings
     state: directory
@@ -49,7 +49,7 @@
 
 - name: Install Docker
   ansible.builtin.apt:
-    pkg:
+    name:
       - docker-ce
       - docker-ce-cli
       - containerd.io

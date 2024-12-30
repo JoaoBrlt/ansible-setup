@@ -11,7 +11,7 @@
     # See https://github.com/geerlingguy/docker-ubuntu1804-ansible/issues/6
     - name: Install the missing packages
       ansible.builtin.apt:
-        pkg:
+        name:
           - dirmngr
           - gpg-agent
         state: present

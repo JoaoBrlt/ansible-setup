@@ -1,10 +1,6 @@
 ---
-- name: Update the repository cache
+- name: Upgrade all packages
   ansible.builtin.apt:
     update_cache: true
-  become: true
-
-- name: Upgrade all the packages
-  ansible.builtin.apt:
     upgrade: full
   become: true

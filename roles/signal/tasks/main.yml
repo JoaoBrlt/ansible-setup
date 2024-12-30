@@ -7,14 +7,14 @@
 
 - name: Install the dependencies
   ansible.builtin.apt:
-    pkg:
+    name:
       - apt-transport-https
       - ca-certificates
       - gpg
     state: present
   become: true
 
-- name: Create the apt keyrings directory
+- name: Create the APT keyrings directory
   ansible.builtin.file:
     path: /etc/apt/keyrings
     state: directory
@@ -47,7 +47,7 @@
     state: present
   become: true
 
-- name: Install Signal Desktop
+- name: Install Signal
   ansible.builtin.apt:
     name: signal-desktop
     state: present

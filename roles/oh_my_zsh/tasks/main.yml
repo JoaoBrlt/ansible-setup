@@ -7,7 +7,8 @@
 
 - name: Install the dependencies
   ansible.builtin.apt:
-    name: git
+    name:
+      - git
     state: present
   become: true
 
