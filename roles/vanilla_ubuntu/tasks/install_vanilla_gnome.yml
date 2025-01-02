@@ -1,0 +1,17 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install vanilla GNOME packages
+  ansible.builtin.apt:
+    name:
+      # Required to install the metapackage
+      - pulseaudio
+
+      # Metapackage
+      - vanilla-gnome-desktop
+    state: present
+  become: true

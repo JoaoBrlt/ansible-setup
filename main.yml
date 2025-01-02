@@ -2,6 +2,8 @@
 - name: Set up the workstation
   hosts: all
   roles:
+    - vanilla_ubuntu
+
     - setup
 
     - role: zsh
@@ -36,3 +38,5 @@
     - vlc
 
     - signal
+
+    - cleanup
