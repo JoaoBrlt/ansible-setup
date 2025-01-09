@@ -1,0 +1,25 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Add the Papirus repository
+  ansible.builtin.apt_repository:
+    repo: ppa:papirus/papirus
+    update_cache: true
+    state: present
+  become: true
+
+- name: Install Papirus icon theme
+  ansible.builtin.apt:
+    name: papirus-icon-theme
+    state: present
+  become: true
+
+- name: Set the icon theme to "Papirus-Dark"
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/icon-theme"
+    value: "'Papirus-Dark'"
+    state: present

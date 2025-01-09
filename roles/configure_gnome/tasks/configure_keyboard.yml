@@ -1,0 +1,19 @@
+---
+- name: Set the default keyboard layout to "French"
+  ansible.builtin.lineinfile:
+    path: /etc/default/keyboard
+    regexp: "^XKBLAYOUT="
+    line: XKBLAYOUT="fr"
+  become: true
+
+- name: Set the keyboard layout to "French"
+  community.general.dconf:
+    key: "/org/gnome/desktop/input-sources/sources"
+    value: "[('xkb', 'fr')]"
+    state: present
+
+- name: Set the compose key to "Right Ctrl"
+  community.general.dconf:
+    key: "/org/gnome/desktop/input-sources/xkb-options"
+    value: "['compose:rctrl']"
+    state: present

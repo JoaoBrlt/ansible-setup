@@ -1,0 +1,54 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install the dependencies
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - gpg
+    state: present
+  become: true
+
+- name: Create the APT keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Download the Signal GPG key
+  ansible.builtin.get_url:
+    url: https://updates.signal.org/desktop/apt/keys.asc
+    dest: /tmp/signal.asc
+    owner: root
+    group: root
+    mode: "0644"
+    checksum: sha256:2aca20b81a56ba0fbe24bdf58a45023e58a38392d885068afe596785ccd95491
+  become: true
+
+- name: Dearmor the Signal GPG key
+  ansible.builtin.command:
+    cmd: gpg --dearmor --output /etc/apt/keyrings/signal.gpg /tmp/signal.asc
+    creates: /etc/apt/keyrings/signal.gpg
+  become: true
+
+- name: Add the Signal repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/signal.gpg] https://updates.signal.org/desktop/apt xenial main"
+    filename: signal
+    update_cache: true
+    state: present
+  become: true
+
+- name: Install Signal
+  ansible.builtin.apt:
+    name: signal-desktop
+    state: present
+  become: true

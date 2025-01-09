@@ -1,0 +1,26 @@
+---
+- name: Remove Ubuntu Report
+  ansible.builtin.apt:
+    name: ubuntu-report
+    state: absent
+    purge: true
+  become: true
+
+- name: Remove all unused packages
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  become: true
+
+- name: Prevent future installations of Ubuntu Report
+  ansible.builtin.copy:
+    src: no-ubuntu-report
+    dest: /etc/apt/preferences.d/no-ubuntu-report
+    owner: root
+    group: root
+    mode: "0644"
+  notify: apt update
+  become: true
+
+- name: Flush the handlers
+  ansible.builtin.meta: flush_handlers

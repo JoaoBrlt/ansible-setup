@@ -1,0 +1,40 @@
+---
+- name: Find the latest JDK version ({{ item.version }})
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      source ~/.sdkman/bin/sdkman-init.sh
+      sdk list java | grep -o "{{ item.version }}.[^ ]*-tem" | head -n 1
+    executable: /bin/bash
+  register: java_version
+  changed_when: false
+
+- name: Install JDK ({{ item.version }})
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      source ~/.sdkman/bin/sdkman-init.sh
+      echo "y" | sdk install java {{ java_version.stdout }}
+    executable: /bin/bash
+  register: java_install
+  changed_when: "'is already installed.' not in java_install.stdout"
+  failed_when: "java_install.rc != 0 and 'is already installed.' not in java_install.stdout"
+
+- name: Get the default JDK version ({{ item.version }})
+  ansible.builtin.shell:
+    cmd: |
+      source ~/.sdkman/bin/sdkman-init.sh
+      sdk current java
+    executable: /bin/bash
+  register: default_java_version
+  when: item.default | default(false)
+  changed_when: false
+
+- name: Set the default JDK version ({{ item.version }})
+  ansible.builtin.shell:
+    cmd: |
+      source ~/.sdkman/bin/sdkman-init.sh
+      sdk default java {{ java_version.stdout }}
+    executable: /bin/bash
+  when: item.default | default(false)
+  changed_when: "java_version.stdout not in default_java_version.stdout"

@@ -1,0 +1,57 @@
+---
+- name: Remove Ubuntu GNOME packages
+  ansible.builtin.apt:
+    name:
+      # Metapackages
+      - ubuntu-desktop
+      - ubuntu-desktop-minimal
+
+      # Session
+      - ubuntu-session
+
+      # Themes
+      - yaru-theme-gnome-shell
+      - yaru-theme-gtk
+      - yaru-theme-icon
+      - yaru-theme-sound
+
+      # Extensions
+      - gnome-shell-extension-appindicator
+      - gnome-shell-extension-desktop-icons-ng
+      - gnome-shell-extension-ubuntu-dock
+      - gnome-shell-extension-ubuntu-tiling-assistant
+
+      # Applications
+      - gnome-terminal
+    state: absent
+    purge: true
+  become: true
+
+- name: Remove all unused packages
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  become: true
+
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install vanilla GNOME packages
+  ansible.builtin.apt:
+    name:
+      # Required to install the metapackage
+      - pulseaudio
+
+      # Metapackage
+      - vanilla-gnome-desktop
+    state: present
+  become: true
+
+- name: Remove all unused packages
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  become: true

@@ -1,0 +1,65 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install the dependencies
+  ansible.builtin.apt:
+    name:
+      - git
+    state: present
+  become: true
+
+- name: Check the installation directory
+  ansible.builtin.stat:
+    path: ~/.oh-my-zsh
+  register: install_dir
+
+- name: Download the installation script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/install_ohmyzsh.sh
+    mode: "0700"
+  when: not install_dir.stat.exists
+
+- name: Install Oh My Zsh
+  ansible.builtin.command: /bin/sh /tmp/install_ohmyzsh.sh --unattended
+  when: not install_dir.stat.exists
+  changed_when: true
+
+- name: Check the enabled plugins
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      cat ~/.zshrc | awk '/^plugins=\(/,/\)/'
+    executable: /bin/bash
+  register: enabled_plugins
+  changed_when: false
+
+- name: Install the Zsh autosuggestions plugin
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    version: master
+
+- name: Enable the Zsh autosuggestions plugin
+  ansible.builtin.replace:
+    path: ~/.zshrc
+    regexp: ^plugins=\(([^)]*)\)
+    replace: plugins=(\1 zsh-autosuggestions)
+  when: "'zsh-autosuggestions' not in enabled_plugins.stdout"
+
+- name: Install the Zsh syntax highlighting plugin
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    version: master
+
+- name: Enable the Zsh syntax highlighting plugin
+  ansible.builtin.replace:
+    path: ~/.zshrc
+    regexp: ^plugins=\(([^)]*)\)
+    replace: plugins=(\1 zsh-syntax-highlighting)
+  when: "'zsh-syntax-highlighting' not in enabled_plugins.stdout"

@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: sdkman
+      sdkman_java_versions:
+        - { version: 17 }
+        - { version: 21, default: true }

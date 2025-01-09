@@ -1,0 +1,21 @@
+---
+- name: Remove Ubuntu Report
+  ansible.builtin.include_tasks: remove_ubuntu_report.yml
+
+- name: Remove Apport
+  ansible.builtin.include_tasks: remove_apport.yml
+
+- name: Remove Whoopsie
+  ansible.builtin.include_tasks: remove_whoopsie.yml
+
+- name: Remove Update Notifier
+  ansible.builtin.include_tasks: remove_update_notifier.yml
+
+- name: Remove Snap
+  ansible.builtin.include_tasks: remove_snap.yml
+
+- name: Disable terminal ads
+  ansible.builtin.include_tasks: disable_terminal_ads.yml
+
+- name: Install vanilla GNOME desktop
+  ansible.builtin.include_tasks: install_vanilla_gnome.yml

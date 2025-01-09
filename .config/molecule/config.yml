@@ -1,0 +1,22 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: vagrant
+  provider:
+    name: libvirt
+
+platforms:
+  - name: ubuntu-24.04
+    box: joaobrlt/ubuntu-desktop-24.04
+    memory: 4096
+    cpus: 2
+
+provisioner:
+  name: ansible
+#  env:
+#    ANSIBLE_VERBOSITY: 3
+
+verifier:
+  name: testinfra

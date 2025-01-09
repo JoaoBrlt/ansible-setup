@@ -1,0 +1,67 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install the dependencies
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - gpg
+    state: present
+  become: true
+
+- name: Create the APT keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Download the Mozilla GPG key
+  ansible.builtin.get_url:
+    url: https://packages.mozilla.org/apt/repo-signing-key.gpg
+    dest: /tmp/mozilla.asc
+    owner: root
+    group: root
+    mode: "0644"
+    checksum: sha256:3ecc63922b7795eb23fdc449ff9396f9114cb3cf186d6f5b53ad4cc3ebfbb11f
+  become: true
+
+- name: Dearmor the Mozilla GPG key
+  ansible.builtin.command:
+    cmd: gpg --dearmor --output /etc/apt/keyrings/mozilla.gpg /tmp/mozilla.asc
+    creates: /etc/apt/keyrings/mozilla.gpg
+  become: true
+
+- name: Add the Mozilla repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/mozilla.gpg] https://packages.mozilla.org/apt mozilla main"
+    filename: mozilla
+    state: present
+  notify: apt update
+  become: true
+
+- name: Configure APT to prioritize packages from the Mozilla repository
+  ansible.builtin.copy:
+    src: mozilla
+    dest: /etc/apt/preferences.d/mozilla
+    owner: root
+    group: root
+    mode: "0644"
+  notify: apt update
+  become: true
+
+- name: Flush the handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Install Firefox
+  ansible.builtin.apt:
+    name: firefox
+    state: present
+  become: true

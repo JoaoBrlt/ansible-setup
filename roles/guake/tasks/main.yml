@@ -1,0 +1,28 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install the dependencies
+  ansible.builtin.apt:
+    name: dconf-cli # Required to restore the preferences
+    state: present
+  become: true
+
+- name: Install Guake
+  ansible.builtin.apt:
+    name: guake
+    state: present
+  become: true
+
+- name: Copy the Guake preferences
+  ansible.builtin.copy:
+    src: guake.cfg
+    dest: /tmp/guake.cfg
+    mode: "0644"
+
+- name: Restore the Guake preferences
+  ansible.builtin.command: guake --restore-preferences=/tmp/guake.cfg
+  changed_when: false # To avoid the task being marked as changed even when the preferences did not change

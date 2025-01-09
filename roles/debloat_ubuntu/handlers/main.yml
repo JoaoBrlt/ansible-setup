@@ -1,0 +1,6 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+  listen: apt update
+  become: true

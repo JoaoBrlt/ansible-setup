@@ -1,0 +1,26 @@
+---
+- name: Remove Apport
+  ansible.builtin.apt:
+    name: apport
+    state: absent
+    purge: true
+  become: true
+
+- name: Remove all unused packages
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  become: true
+
+- name: Prevent future installations of Apport
+  ansible.builtin.copy:
+    src: no-apport
+    dest: /etc/apt/preferences.d/no-apport
+    owner: root
+    group: root
+    mode: "0644"
+  notify: apt update
+  become: true
+
+- name: Flush the handlers
+  ansible.builtin.meta: flush_handlers

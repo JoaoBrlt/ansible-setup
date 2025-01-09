@@ -1,0 +1,40 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install the dependencies
+  ansible.builtin.apt:
+    name:
+      - git
+      - curl
+  become: true
+
+- name: Check the installation directory
+  ansible.builtin.stat:
+    path: ~/.nvm
+  register: install_dir
+
+- name: Download the installation script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh
+    dest: /tmp/install_nvm.sh
+    mode: "0700"
+  when: not install_dir.stat.exists
+
+- name: Install NVM
+  ansible.builtin.command: /bin/bash /tmp/install_nvm.sh
+  when: not install_dir.stat.exists
+  changed_when: true
+
+- name: Synchronize the Node versions
+  ansible.builtin.shell:
+    cmd: source ~/.nvm/nvm.sh && nvm ls-remote
+    executable: /bin/bash
+  changed_when: false
+
+- name: Install the Node versions
+  ansible.builtin.include_tasks: install-node.yml
+  loop: "{{ nvm_node_versions }}"

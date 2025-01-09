@@ -1,0 +1,37 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install the dependencies
+  ansible.builtin.apt:
+    name:
+      - curl
+      - tar
+      - zip
+      - unzip
+    state: present
+  become: true
+
+- name: Check the installation directory
+  ansible.builtin.stat:
+    path: ~/.sdkman
+  register: install_dir
+
+- name: Download the installation script
+  ansible.builtin.get_url:
+    url: https://get.sdkman.io
+    dest: /tmp/install_sdkman.sh
+    mode: "0700"
+  when: not install_dir.stat.exists
+
+- name: Install SDKMAN
+  ansible.builtin.command: /bin/bash /tmp/install_sdkman.sh
+  when: not install_dir.stat.exists
+  changed_when: true
+
+- name: Install the Java versions
+  ansible.builtin.include_tasks: install-java.yml
+  loop: "{{ sdkman_java_versions }}"
