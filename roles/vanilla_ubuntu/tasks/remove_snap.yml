@@ -1,0 +1,73 @@
+---
+- name: Check if Snap is installed
+  ansible.builtin.shell:
+    cmd: command -v snap
+    executable: /bin/bash
+  register: is_installed
+  changed_when: false
+  failed_when: false # Because Snap can be missing
+
+- name: Remove Snaps
+  when: is_installed.rc == 0
+  block:
+    - name: List Snaps
+      ansible.builtin.command: snap list
+      register: snap_list
+      changed_when: false
+
+    - name: Remove Snaps
+      community.general.snap:
+        name: "{{ item | split | first }}"
+        state: absent
+      failed_when: false # Because some Snaps cannot be removed
+      loop: "{{ snap_list.stdout_lines[1:] }}"
+      become: true
+
+- name: Get the list of services
+  ansible.builtin.service_facts:
+
+- name: Stop the snapd service
+  ansible.builtin.service:
+    name: snapd.service
+    state: stopped
+    enabled: false
+  when: "'snapd.service' in ansible_facts.services"
+  become: true
+
+- name: Remove snapd
+  ansible.builtin.apt:
+    name: snapd
+    state: absent
+    purge: true
+  become: true
+
+- name: Remove all unused packages
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  become: true
+
+- name: Prevent future installations of snapd
+  ansible.builtin.copy:
+    src: no-snap
+    dest: /etc/apt/preferences.d/no-snap
+    owner: root
+    group: root
+    mode: "0644"
+  notify: apt update
+  become: true
+
+- name: Flush the handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Remove Snap-related files and directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - ~/snap
+    - /snap
+    - /var/snap
+    - /var/lib/snapd
+    - /var/cache/snapd
+  become: true

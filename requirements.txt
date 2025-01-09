@@ -1,0 +1,6 @@
+ansible
+ansible-core
+ansible-lint
+molecule
+molecule-plugins[vagrant]
+pytest-testinfra

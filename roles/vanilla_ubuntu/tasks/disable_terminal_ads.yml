@@ -1,0 +1,5 @@
+---
+- name: Disable Ubuntu Pro terminal ads
+  ansible.builtin.command: pro config set apt_news=false
+  become: true
+  changed_when: false

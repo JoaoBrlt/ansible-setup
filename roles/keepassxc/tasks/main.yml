@@ -1,0 +1,13 @@
+---
+- name: Add the KeepassXC repository
+  ansible.builtin.apt_repository:
+    repo: ppa:phoerious/keepassxc
+    update_cache: true
+    state: present
+  become: true
+
+- name: Install KeepassXC
+  ansible.builtin.apt:
+    name: keepassxc
+    state: present
+  become: true

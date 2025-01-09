@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: nvm
+      nvm_node_versions:
+        - { version: 20 }
+        - { version: 22, default: true }

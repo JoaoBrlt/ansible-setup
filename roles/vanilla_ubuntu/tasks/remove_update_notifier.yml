@@ -1,0 +1,26 @@
+---
+- name: Remove Update Notifier
+  ansible.builtin.apt:
+    name: update-notifier
+    state: absent
+    purge: true
+  become: true
+
+- name: Remove all unused packages
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  become: true
+
+- name: Prevent future installations of Update Notifier
+  ansible.builtin.copy:
+    src: no-update-notifier
+    dest: /etc/apt/preferences.d/no-update-notifier
+    owner: root
+    group: root
+    mode: "0644"
+  notify: apt update
+  become: true
+
+- name: Flush the handlers
+  ansible.builtin.meta: flush_handlers

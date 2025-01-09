@@ -1,0 +1,37 @@
+---
+- name: Get the list of services
+  ansible.builtin.service_facts:
+
+- name: Stop the Apport service
+  ansible.builtin.service:
+    name: apport.service
+    state: stopped
+    enabled: false
+  when: "'apport.service' in ansible_facts.services"
+  become: true
+
+- name: Remove Apport
+  ansible.builtin.apt:
+    name: apport
+    state: absent
+    purge: true
+  become: true
+
+- name: Remove all unused packages
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  become: true
+
+- name: Prevent future installations of Apport
+  ansible.builtin.copy:
+    src: no-apport
+    dest: /etc/apt/preferences.d/no-apport
+    owner: root
+    group: root
+    mode: "0644"
+  notify: apt update
+  become: true
+
+- name: Flush the handlers
+  ansible.builtin.meta: flush_handlers

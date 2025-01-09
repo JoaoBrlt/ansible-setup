@@ -1,0 +1,37 @@
+---
+- name: Get the list of services
+  ansible.builtin.service_facts:
+
+- name: Stop the Whoopsie service
+  ansible.builtin.service:
+    name: whoopsie.service
+    state: stopped
+    enabled: false
+  when: "'whoopsie.service' in ansible_facts.services"
+  become: true
+
+- name: Remove Whoopsie
+  ansible.builtin.apt:
+    name: whoopsie
+    state: absent
+    purge: true
+  become: true
+
+- name: Remove all unused packages
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+  become: true
+
+- name: Prevent future installations of Whoopsie
+  ansible.builtin.copy:
+    src: no-whoopsie
+    dest: /etc/apt/preferences.d/no-whoopsie
+    owner: root
+    group: root
+    mode: "0644"
+  notify: apt update
+  become: true
+
+- name: Flush the handlers
+  ansible.builtin.meta: flush_handlers
