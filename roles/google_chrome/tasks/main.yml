@@ -20,7 +20,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   become: true
 
 - name: Download the Google GPG key
@@ -29,7 +29,7 @@
     dest: /tmp/google.asc
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
     checksum: sha256:05ee0181a70b39bd5c71630bc9a828856c22cebd9449602759dd4fd89338e54d
   become: true
 

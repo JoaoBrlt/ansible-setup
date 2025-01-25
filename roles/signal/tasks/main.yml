@@ -20,7 +20,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   become: true
 
 - name: Download the Signal GPG key
@@ -29,7 +29,7 @@
     dest: /tmp/signal.asc
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
     checksum: sha256:2aca20b81a56ba0fbe24bdf58a45023e58a38392d885068afe596785ccd95491
   become: true
 

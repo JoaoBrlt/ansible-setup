@@ -21,7 +21,7 @@
   ansible.builtin.copy:
     src: guake.cfg
     dest: /tmp/guake.cfg
-    mode: '0644'
+    mode: "0644"
 
 - name: Restore the Guake preferences
   ansible.builtin.command: guake --restore-preferences=/tmp/guake.cfg

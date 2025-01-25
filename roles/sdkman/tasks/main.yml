@@ -24,7 +24,7 @@
   ansible.builtin.get_url:
     url: https://get.sdkman.io
     dest: /tmp/install_sdkman.sh
-    mode: '0700'
+    mode: "0700"
   when: not install_dir.stat.exists
 
 - name: Install SDKMAN
@@ -34,4 +34,4 @@
 
 - name: Install the Java versions
   ansible.builtin.include_tasks: install-java.yml
-  loop: '{{ sdkman_java_versions }}'
+  loop: "{{ sdkman_java_versions }}"

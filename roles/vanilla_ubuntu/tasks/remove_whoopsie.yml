@@ -1,15 +1,4 @@
 ---
-- name: Get the list of services
-  ansible.builtin.service_facts:
-
-- name: Stop the Whoopsie service
-  ansible.builtin.service:
-    name: whoopsie.service
-    state: stopped
-    enabled: false
-  when: "'whoopsie.service' in ansible_facts.services"
-  become: true
-
 - name: Remove Whoopsie
   ansible.builtin.apt:
     name: whoopsie

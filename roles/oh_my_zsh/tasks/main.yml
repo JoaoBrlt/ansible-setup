@@ -21,7 +21,7 @@
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
     dest: /tmp/install_ohmyzsh.sh
-    mode: '0700'
+    mode: "0700"
   when: not install_dir.stat.exists
 
 - name: Install Oh My Zsh
@@ -49,7 +49,7 @@
     path: ~/.zshrc
     regexp: ^plugins=\(([^)]*)\)
     replace: plugins=(\1 zsh-autosuggestions)
-  when: '"zsh-autosuggestions" not in enabled_plugins.stdout'
+  when: "'zsh-autosuggestions' not in enabled_plugins.stdout"
 
 - name: Install the Zsh syntax highlighting plugin
   ansible.builtin.git:
@@ -62,4 +62,4 @@
     path: ~/.zshrc
     regexp: ^plugins=\(([^)]*)\)
     replace: plugins=(\1 zsh-syntax-highlighting)
-  when: '"zsh-syntax-highlighting" not in enabled_plugins.stdout'
+  when: "'zsh-syntax-highlighting' not in enabled_plugins.stdout"

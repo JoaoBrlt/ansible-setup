@@ -5,7 +5,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   become: true
 
 - name: Download and install the MesloLGS NF Regular font
@@ -14,7 +14,7 @@
     dest: /usr/share/fonts/MesloLGS NF Regular.ttf
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   become: true
 
 - name: Download and install the MesloLGS NF Bold font
@@ -23,7 +23,7 @@
     dest: /usr/share/fonts/MesloLGS NF Bold.ttf
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   become: true
 
 - name: Download and install the MesloLGS NF Italic font
@@ -32,7 +32,7 @@
     dest: /usr/share/fonts/MesloLGS NF Italic.ttf
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   become: true
 
 - name: Download and install the MesloLGS NF Bold Italic font
@@ -41,7 +41,7 @@
     dest: /usr/share/fonts/MesloLGS NF Bold Italic.ttf
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   become: true
 
 - name: Install the Powerlevel10k theme
@@ -61,7 +61,7 @@
   ansible.builtin.copy:
     src: .p10k.zsh
     dest: ~/.p10k.zsh
-    mode: '0644'
+    mode: "0644"
 
 - name: Check if the Powerlevel10k theme configuration is already loaded
   ansible.builtin.lineinfile:

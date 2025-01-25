@@ -21,7 +21,7 @@
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh
     dest: /tmp/install_nvm.sh
-    mode: '0700'
+    mode: "0700"
   when: not install_dir.stat.exists
 
 - name: Install NVM
@@ -37,4 +37,4 @@
 
 - name: Install the Node versions
   ansible.builtin.include_tasks: install-node.yml
-  loop: '{{ nvm_node_versions }}'
+  loop: "{{ nvm_node_versions }}"

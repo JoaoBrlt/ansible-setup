@@ -1,15 +1,4 @@
 ---
-- name: Get the list of services
-  ansible.builtin.service_facts:
-
-- name: Stop the Apport service
-  ansible.builtin.service:
-    name: apport.service
-    state: stopped
-    enabled: false
-  when: "'apport.service' in ansible_facts.services"
-  become: true
-
 - name: Remove Apport
   ansible.builtin.apt:
     name: apport
