@@ -30,7 +30,7 @@
     owner: root
     group: root
     mode: "0644"
-    checksum: sha256:05ee0181a70b39bd5c71630bc9a828856c22cebd9449602759dd4fd89338e54d
+    checksum: sha256:81dc8f9c5363b9afe6df6f4247f3b8c35b3c07cba9a54582b35f03dc94f39855
   become: true
 
 - name: Dearmor the Google GPG key
