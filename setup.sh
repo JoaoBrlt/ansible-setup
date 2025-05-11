@@ -18,6 +18,12 @@ if ! command -v pip3 &> /dev/null; then
   exit 1
 fi
 
+# Check if python3-venv is installed
+if ! python3 -m venv "/tmp/check-venv" &> /dev/null; then
+  echo "Error: python3-venv is not installed."
+  exit 1
+fi
+
 # Clone the repository
 git clone https://github.com/JoaoBrlt/ansible-setup.git
 
