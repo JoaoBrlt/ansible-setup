@@ -1,0 +1,36 @@
+---
+- name: Install the dependencies
+  ansible.builtin.include_tasks: install_dependencies.yml
+
+- name: Configure the theme
+  ansible.builtin.include_tasks: configure_theme.yml
+
+- name: Configure the background
+  ansible.builtin.include_tasks: configure_background.yml
+
+- name: Configure the fonts
+  ansible.builtin.include_tasks: configure_fonts.yml
+
+- name: Configure the cursor
+  ansible.builtin.include_tasks: configure_cursor.yml
+
+- name: Configure the icons
+  ansible.builtin.include_tasks: configure_icons.yml
+
+- name: Configure the theme for legacy apps
+  ansible.builtin.include_tasks: configure_legacy_apps_theme.yml
+
+- name: Configure the keyboard
+  ansible.builtin.include_tasks: configure_keyboard.yml
+
+- name: Configure the multitasking options
+  ansible.builtin.include_tasks: configure_multitasking.yml
+
+- name: Configure the privacy options
+  ansible.builtin.include_tasks: configure_privacy.yml
+
+- name: Install GNOME apps
+  ansible.builtin.include_tasks: install_apps.yml
+
+- name: Install GNOME extensions
+  ansible.builtin.include_tasks: install_extensions.yml

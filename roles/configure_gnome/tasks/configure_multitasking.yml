@@ -1,0 +1,6 @@
+---
+- name: Disable the "Hot Corner" feature
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/enable-hot-corners"
+    value: "false"
+    state: present

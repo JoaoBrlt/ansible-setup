@@ -1,7 +1,3 @@
-def test_ubuntu_session_uninstalled(host):
-  ubuntu_session = host.package("ubuntu-session")
-  assert not ubuntu_session.is_installed
-
 def test_ubuntu_report_uninstalled(host):
   ubuntu_report = host.package("ubuntu-report")
   assert not ubuntu_report.is_installed
@@ -22,21 +18,29 @@ def test_snapd_uninstalled(host):
   snapd = host.package("snapd")
   assert not snapd.is_installed
 
+def test_ubuntu_session_uninstalled(host):
+  ubuntu_session = host.package("ubuntu-session")
+  assert not ubuntu_session.is_installed
+
 def test_gnome_session_installed(host):
   gnome_session = host.package("gnome-session")
   assert gnome_session.is_installed
-
-def test_flatpak_installed(host):
-  flatpak = host.package("flatpak")
-  assert flatpak.is_installed
 
 def test_gnome_software_installed(host):
   gnome_software = host.package("gnome-software")
   assert gnome_software.is_installed
 
-def test_firefox_installed(host):
-  firefox = host.package("firefox")
-  assert firefox.is_installed
+def test_gnome_tweaks_installed(host):
+  gnome_tweaks = host.package("gnome-tweaks")
+  assert gnome_tweaks.is_installed
+
+def test_gnome_extension_manager_installed(host):
+  gnome_shell_extension_manager = host.package("gnome-shell-extension-manager")
+  assert gnome_shell_extension_manager.is_installed
+
+def test_flatpak_installed(host):
+  flatpak = host.package("flatpak")
+  assert flatpak.is_installed
 
 def test_zsh_installed(host):
   zsh = host.package("zsh")
@@ -107,6 +111,10 @@ def test_google_chrome_installed(host):
   google_chrome = host.package("google-chrome-stable")
   assert google_chrome.is_installed
 
+def test_firefox_installed(host):
+  firefox = host.package("firefox")
+  assert firefox.is_installed
+
 def test_keepassxc_installed(host):
   keepassxc = host.package("keepassxc")
   assert keepassxc.is_installed
@@ -122,3 +130,9 @@ def test_vlc_installed(host):
 def test_signal_installed(host):
   signal = host.package("signal-desktop")
   assert signal.is_installed
+
+def test_postman_installed(host):
+  app_id = "com.getpostman.Postman"
+  result = host.run("flatpak list --app --columns=application")
+  assert result.rc == 0
+  assert app_id in result.stdout.splitlines()

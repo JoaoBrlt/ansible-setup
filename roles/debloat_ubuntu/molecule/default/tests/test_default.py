@@ -1,7 +1,3 @@
-def test_ubuntu_session_uninstalled(host):
-  ubuntu_session = host.package("ubuntu-session")
-  assert not ubuntu_session.is_installed
-
 def test_ubuntu_report_uninstalled(host):
   ubuntu_report = host.package("ubuntu-report")
   assert not ubuntu_report.is_installed
@@ -22,18 +18,10 @@ def test_snapd_uninstalled(host):
   snapd = host.package("snapd")
   assert not snapd.is_installed
 
+def test_ubuntu_session_uninstalled(host):
+  ubuntu_session = host.package("ubuntu-session")
+  assert not ubuntu_session.is_installed
+
 def test_gnome_session_installed(host):
   gnome_session = host.package("gnome-session")
   assert gnome_session.is_installed
-
-def test_flatpak_installed(host):
-  flatpak = host.package("flatpak")
-  assert flatpak.is_installed
-
-def test_gnome_software_installed(host):
-  gnome_software = host.package("gnome-software")
-  assert gnome_software.is_installed
-
-def test_firefox_installed(host):
-  firefox = host.package("firefox")
-  assert firefox.is_installed

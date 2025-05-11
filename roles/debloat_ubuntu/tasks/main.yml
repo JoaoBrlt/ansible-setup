@@ -17,11 +17,5 @@
 - name: Disable terminal ads
   ansible.builtin.include_tasks: disable_terminal_ads.yml
 
-- name: Install Flatpak, Flathub and Gnome Software
-  ansible.builtin.include_tasks: install_flathub.yml
-
-- name: Install Firefox from the Mozilla repository
-  ansible.builtin.include_tasks: install_firefox.yml
-
 - name: Install vanilla GNOME desktop
   ansible.builtin.include_tasks: install_vanilla_gnome.yml

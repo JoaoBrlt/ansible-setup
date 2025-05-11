@@ -1,0 +1,12 @@
+---
+- name: Disable "Remember recent files"
+  community.general.dconf:
+    key: "/org/gnome/desktop/privacy/remember-recent-files"
+    value: "false"
+    state: present
+
+- name: Disable "Remember app usage"
+  community.general.dconf:
+    key: "/org/gnome/desktop/privacy/remember-app-usage"
+    value: "false"
+    state: present

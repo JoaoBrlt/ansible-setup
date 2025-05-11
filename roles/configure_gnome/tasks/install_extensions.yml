@@ -1,0 +1,53 @@
+---
+- name: Install Python Pip
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+  become: true
+
+- name: Install Python Venv
+  ansible.builtin.apt:
+    name: python3-venv
+    state: present
+  become: true
+
+- name: Install GNOME Extensions CLI
+  ansible.builtin.pip:
+    name: gnome-extensions-cli
+    virtualenv: /tmp/gnome-extensions-cli
+    virtualenv_command: python3 -m venv
+
+- name: Install Dash to Dock
+  ansible.builtin.command:
+    chdir: /tmp/gnome-extensions-cli
+    cmd: ./bin/gnome-extensions-cli install dash-to-dock@micxgx.gmail.com
+  register: extension_install
+  changed_when: "'is already installed' not in extension_install.stdout"
+
+- name: Install Desktop Icons NG (DING)
+  ansible.builtin.command:
+    chdir: /tmp/gnome-extensions-cli
+    cmd: ./bin/gnome-extensions-cli install ding@rastersoft.com
+  register: extension_install
+  changed_when: "'is already installed' not in extension_install.stdout"
+
+- name: Install AppIndicator and KStatusNotifierItem Support
+  ansible.builtin.command:
+    chdir: /tmp/gnome-extensions-cli
+    cmd: ./bin/gnome-extensions-cli install appindicatorsupport@rgcjonas.gmail.com
+  register: extension_install
+  changed_when: "'is already installed' not in extension_install.stdout"
+
+- name: Install Tiling Assistant
+  ansible.builtin.command:
+    chdir: /tmp/gnome-extensions-cli
+    cmd: ./bin/gnome-extensions-cli install tiling-assistant@leleat-on-github
+  register: extension_install
+  changed_when: "'is already installed' not in extension_install.stdout"
+
+- name: Install Legacy (GTK3) Theme Scheme Auto Switcher
+  ansible.builtin.command:
+    chdir: /tmp/gnome-extensions-cli
+    cmd: ./bin/gnome-extensions-cli install legacyschemeautoswitcher@joshimukul29.gmail.com
+  register: extension_install
+  changed_when: "'is already installed' not in extension_install.stdout"

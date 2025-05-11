@@ -1,0 +1,6 @@
+---
+- name: Set the monospace font to "Monospace 10"
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/monospace-font-name"
+    value: "'Monospace 10'"
+    state: present

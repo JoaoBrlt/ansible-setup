@@ -18,13 +18,13 @@
     state: present
   become: true
 
-- name: Install Gnome Software
+- name: Install GNOME Software
   ansible.builtin.apt:
     name: gnome-software
     state: present
   become: true
 
-- name: Install the Gnome Software Flatpak plugin
+- name: Install the GNOME Software Flatpak plugin
   ansible.builtin.apt:
     name: gnome-software-plugin-flatpak
     state: present

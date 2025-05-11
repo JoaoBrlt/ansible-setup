@@ -2,9 +2,13 @@
 - name: Set up the workstation
   hosts: all
   roles:
-    - vanilla_ubuntu
+    - debloat_ubuntu
 
     - setup
+
+    - flatpak
+
+    - configure_gnome
 
     - role: zsh
       zsh_default_shell: true
@@ -30,6 +34,8 @@
     - docker
 
     - google_chrome
+
+    - firefox
 
     - keepassxc
 

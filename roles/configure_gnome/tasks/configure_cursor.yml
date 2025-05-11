@@ -1,0 +1,18 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install Bibata cursor theme
+  ansible.builtin.apt:
+    name: bibata-cursor-theme
+    state: present
+  become: true
+
+- name: Set the cursor theme to "Bibata Modern Classic"
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/cursor-theme"
+    value: "'Bibata-Modern-Classic'"
+    state: present
