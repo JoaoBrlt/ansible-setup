@@ -10,19 +10,20 @@ This repository contains the scripts to set up my personal workstation.
 
 - [Git](https://git-scm.com/)
 - [Python 3](https://www.python.org/)
+- [Wget](https://www.gnu.org/software/wget/) or [cURL](https://curl.se/)
 
 ## Usage
-
-Using `curl`:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/JoaoBrlt/ansible-setup/master/setup.sh | bash
-```
 
 Using `wget`:
 
 ```bash
 wget -qO- https://raw.githubusercontent.com/JoaoBrlt/ansible-setup/master/setup.sh | bash
+```
+
+Using `curl`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/JoaoBrlt/ansible-setup/master/setup.sh | bash
 ```
 
 ## License
