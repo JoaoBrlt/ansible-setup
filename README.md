@@ -11,38 +11,18 @@ This repository contains the scripts to set up my personal workstation.
 - [Git](https://git-scm.com/)
 - [Python 3](https://www.python.org/)
 
-## Installation
-
-- Clone the repository:
-
-```bash
-git clone https://github.com/JoaoBrlt/ansible-setup.git
-```
-
-- Create a virtual environment:
-
-```bash
-python3 -m venv .venv
-```
-
-- Activate the virtual environment:
-
-```bash
-source .venv/bin/activate
-```
-
-- Install the dependencies:
-
-```bash
-pip3 install -r requirements.txt
-```
-
 ## Usage
 
-- Run the playbook:
+Using `curl`:
 
 ```bash
-ansible-playbook main.yml --ask-become-pass
+curl -fsSL https://raw.githubusercontent.com/JoaoBrlt/ansible-setup/master/setup.sh | bash
+```
+
+Using `wget`:
+
+```bash
+wget -qO- https://raw.githubusercontent.com/JoaoBrlt/ansible-setup/master/setup.sh | bash
 ```
 
 ## License
