@@ -16,6 +16,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout the project
@@ -37,6 +38,7 @@ jobs:
     name: Detect roles
     needs: lint
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     outputs:
       roles: ${{ steps.detect_roles.outputs.roles }}
@@ -53,6 +55,7 @@ jobs:
     name: Test roles
     needs: detect_roles
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     strategy:
       fail-fast: false
@@ -107,6 +110,7 @@ jobs:
     name: Test playbook
     needs: test_roles
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
       - name: Checkout the project
