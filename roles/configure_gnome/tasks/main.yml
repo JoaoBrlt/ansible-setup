@@ -29,8 +29,8 @@
 - name: Configure the privacy options
   ansible.builtin.include_tasks: configure_privacy.yml
 
-- name: Install GNOME apps
-  ansible.builtin.include_tasks: install_apps.yml
+- name: Install GNOME applications
+  ansible.builtin.include_tasks: install_applications.yml
 
 - name: Install GNOME extensions
   ansible.builtin.include_tasks: install_extensions.yml

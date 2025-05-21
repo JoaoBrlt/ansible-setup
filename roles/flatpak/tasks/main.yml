@@ -17,15 +17,3 @@
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
     state: present
   become: true
-
-- name: Install GNOME Software
-  ansible.builtin.apt:
-    name: gnome-software
-    state: present
-  become: true
-
-- name: Install the GNOME Software Flatpak plugin
-  ansible.builtin.apt:
-    name: gnome-software-plugin-flatpak
-    state: present
-  become: true

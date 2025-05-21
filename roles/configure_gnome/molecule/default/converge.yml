@@ -4,4 +4,6 @@
   roles:
     - debloat_ubuntu
 
+    - flatpak
+
     - configure_gnome
