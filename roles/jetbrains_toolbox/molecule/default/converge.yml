@@ -1,0 +1,6 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: jetbrains_toolbox
+      jetbrains_toolbox_version: latest

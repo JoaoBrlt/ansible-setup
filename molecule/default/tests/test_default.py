@@ -26,6 +26,10 @@ def test_gnome_session_installed(host):
   gnome_session = host.package("gnome-session")
   assert gnome_session.is_installed
 
+def test_flatpak_installed(host):
+  flatpak = host.package("flatpak")
+  assert flatpak.is_installed
+
 def test_gnome_software_installed(host):
   gnome_software = host.package("gnome-software")
   assert gnome_software.is_installed
@@ -37,10 +41,6 @@ def test_gnome_tweaks_installed(host):
 def test_gnome_extension_manager_installed(host):
   gnome_shell_extension_manager = host.package("gnome-shell-extension-manager")
   assert gnome_shell_extension_manager.is_installed
-
-def test_flatpak_installed(host):
-  flatpak = host.package("flatpak")
-  assert flatpak.is_installed
 
 def test_zsh_installed(host):
   zsh = host.package("zsh")
@@ -87,12 +87,6 @@ def test_guake_installed(host):
   guake = host.package("guake")
   assert guake.is_installed
 
-def test_nvm_installed(host):
-  env_vars = host.environment()
-  install_dir = host.file(env_vars["HOME"] + "/.nvm")
-  assert install_dir.exists
-  assert install_dir.is_directory
-
 def test_sdkman_installed(host):
   env_vars = host.environment()
   install_dir = host.file(env_vars["HOME"] + "/.sdkman")
@@ -103,9 +97,33 @@ def test_maven_installed(host):
   maven = host.package("maven")
   assert maven.is_installed
 
+def test_nvm_installed(host):
+  env_vars = host.environment()
+  install_dir = host.file(env_vars["HOME"] + "/.nvm")
+  assert install_dir.exists
+  assert install_dir.is_directory
+
 def test_docker_installed(host):
   docker = host.package("docker-ce")
   assert docker.is_installed
+
+def test_jetbrains_toolbox_installed(host):
+  env_vars = host.environment()
+  install_dir = host.file(env_vars["HOME"] + "/.local/share/JetBrains/Toolbox")
+  assert install_dir.exists
+  assert install_dir.is_directory
+
+def test_gitkraken_installed(host):
+  app_id = "com.axosoft.GitKraken"
+  result = host.run("flatpak list --app --columns=application")
+  assert result.rc == 0
+  assert app_id in result.stdout.splitlines()
+
+def test_postman_installed(host):
+  app_id = "com.getpostman.Postman"
+  result = host.run("flatpak list --app --columns=application")
+  assert result.rc == 0
+  assert app_id in result.stdout.splitlines()
 
 def test_google_chrome_installed(host):
   google_chrome = host.package("google-chrome-stable")
@@ -131,26 +149,14 @@ def test_signal_installed(host):
   signal = host.package("signal-desktop")
   assert signal.is_installed
 
-def test_postman_installed(host):
-  app_id = "com.getpostman.Postman"
-  result = host.run("flatpak list --app --columns=application")
-  assert result.rc == 0
-  assert app_id in result.stdout.splitlines()
-
-def test_gitkraken_installed(host):
-  app_id = "com.axosoft.GitKraken"
+def test_slack_installed(host):
+  app_id = "com.slack.Slack"
   result = host.run("flatpak list --app --columns=application")
   assert result.rc == 0
   assert app_id in result.stdout.splitlines()
 
 def test_discord_installed(host):
   app_id = "com.discordapp.Discord"
-  result = host.run("flatpak list --app --columns=application")
-  assert result.rc == 0
-  assert app_id in result.stdout.splitlines()
-
-def test_slack_installed(host):
-  app_id = "com.slack.Slack"
   result = host.run("flatpak list --app --columns=application")
   assert result.rc == 0
   assert app_id in result.stdout.splitlines()

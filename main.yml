@@ -2,14 +2,17 @@
 - name: Set up the workstation
   hosts: all
   roles:
+    # Prepare
     - debloat_ubuntu
+    - prepare
 
-    - setup
-
+    # Package managers
     - flatpak
 
+    # Desktop environment
     - configure_gnome
 
+    # Terminal
     - role: zsh
       zsh_default_shell: true
 
@@ -19,11 +22,7 @@
 
     - guake
 
-    - role: nvm
-      nvm_node_versions:
-        - { version: 20 }
-        - { version: 22, default: true }
-
+    # Development tools
     - role: sdkman
       sdkman_java_versions:
         - { version: 17 }
@@ -31,8 +30,20 @@
 
     - maven
 
+    - role: nvm
+      nvm_node_versions:
+        - { version: 20 }
+        - { version: 22, default: true }
+
     - docker
 
+    - jetbrains_toolbox
+
+    - gitkraken
+
+    - postman
+
+    # Applications
     - google_chrome
 
     - firefox
@@ -45,12 +56,9 @@
 
     - signal
 
-    - gitkraken
-
-    - postman
+    - slack
 
     - discord
 
-    - slack
-
+    # Clean up
     - cleanup

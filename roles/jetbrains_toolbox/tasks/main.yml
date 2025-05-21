@@ -1,0 +1,80 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install the dependencies
+  ansible.builtin.apt:
+    name: libfuse2
+    state: present
+  become: true
+
+- name: Check if JetBrains Toolbox is already installed
+  ansible.builtin.stat:
+    path: ~/.local/share/JetBrains/Toolbox
+  register: jetbrains_toolbox_install_dir
+
+- name: Install JetBrains Toolbox
+  when: not jetbrains_toolbox_install_dir.stat.exists
+  block:
+    - name: Find all available releases
+      ansible.builtin.uri:
+        url: https://data.services.jetbrains.com/products/releases?code=TBA&type=release
+        method: GET
+        return_content: true
+        status_code: 200
+      register: jetbrains_toolbox_releases
+
+    - name: Get the versions
+      ansible.builtin.set_fact:
+        jetbrains_toolbox_versions: "{{ jetbrains_toolbox_releases.json.TBA | map(attribute='version') | list }}"
+
+    - name: Use the specified version
+      ansible.builtin.set_fact:
+        jetbrains_toolbox_version_override: "{{ jetbrains_toolbox_version }}"
+      when: jetbrains_toolbox_version != 'latest'
+
+    - name: Use the latest version
+      ansible.builtin.set_fact:
+        jetbrains_toolbox_version_override: "{{ jetbrains_toolbox_releases.json.TBA | sort(attribute='date') | map(attribute='version') | list | last }}"
+      when: jetbrains_toolbox_version == 'latest'
+
+    - name: Check if the version is valid
+      ansible.builtin.assert:
+        that: (jetbrains_toolbox_version_override | string) in jetbrains_toolbox_versions
+        msg: >
+          The JetBrains Toolbox version ({{ jetbrains_toolbox_version_override }}) is invalid.
+          Available options are {{ jetbrains_toolbox_versions | join(', ') }}.
+
+    - name: Get the release
+      ansible.builtin.set_fact:
+        jetbrains_toolbox_release: "{{ jetbrains_toolbox_releases.json.TBA | selectattr('version', '==', jetbrains_toolbox_version_override) | first }}"
+
+    - name: Create a temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ".jetbrains_toolbox"
+      register: jetbrains_toolbox_download_dir
+      changed_when: false
+
+    - name: Download JetBrains Toolbox
+      ansible.builtin.get_url:
+        url: "{{ jetbrains_toolbox_release.downloads.linux.link }}"
+        dest: "{{ jetbrains_toolbox_download_dir.path }}/jetbrains_toolbox.tar.gz"
+        mode: "0700"
+        checksum: "sha256:{{ lookup('ansible.builtin.url', jetbrains_toolbox_release.downloads.linux.checksumLink) | regex_search('[A-Fa-f0-9]{64}') }}"
+
+    - name: Extract JetBrains Toolbox
+      ansible.builtin.unarchive:
+        src: "{{ jetbrains_toolbox_download_dir.path }}/jetbrains_toolbox.tar.gz"
+        dest: "{{ jetbrains_toolbox_download_dir.path }}"
+        list_files: true
+        remote_src: true
+      register: jetbrains_toolbox_unarchive
+
+    - name: Install JetBrains Toolbox
+      ansible.builtin.command: >
+        {{ [jetbrains_toolbox_download_dir.path, jetbrains_toolbox_unarchive.files | first, 'jetbrains-toolbox'] | path_join }} --install
+      changed_when: true
