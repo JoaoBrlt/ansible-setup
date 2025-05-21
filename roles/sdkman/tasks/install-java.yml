@@ -17,8 +17,8 @@
       echo "y" | sdk install java {{ java_version.stdout }}
     executable: /bin/bash
   register: java_install
-  changed_when: "'is already installed.' not in java_install.stdout"
-  failed_when: "java_install.rc != 0 and 'is already installed.' not in java_install.stdout"
+  changed_when: "'is already installed' not in java_install.stdout"
+  failed_when: "java_install.rc != 0 and 'is already installed' not in java_install.stdout"
 
 - name: Get the default JDK version ({{ item.version }})
   ansible.builtin.shell:
