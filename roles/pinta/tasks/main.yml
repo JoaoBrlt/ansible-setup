@@ -1,0 +1,6 @@
+---
+- name: Install Pinta
+  community.general.flatpak:
+    name: com.github.PintaProject.Pinta
+    state: present
+  become: true

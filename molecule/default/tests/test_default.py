@@ -157,6 +157,12 @@ def test_vlc_installed(host):
   vlc = host.package("vlc")
   assert vlc.is_installed
 
+def test_pinta_installed(host):
+  app_id = "com.github.PintaProject.Pinta"
+  result = host.run("flatpak list --app --columns=application")
+  assert result.rc == 0
+  assert app_id in result.stdout.splitlines()
+
 def test_signal_installed(host):
   signal = host.package("signal-desktop")
   assert signal.is_installed
