@@ -43,6 +43,9 @@
 
     - postman
 
+    # Virtualization tools
+    - libvirt
+
     # Applications
     - google_chrome
 

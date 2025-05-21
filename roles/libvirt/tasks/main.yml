@@ -1,0 +1,38 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install QEMU/KVM
+  ansible.builtin.apt:
+    name: qemu-kvm
+    state: present
+  become: true
+
+- name: Install libvirt daemon system
+  ansible.builtin.apt:
+    name: libvirt-daemon-system
+    state: present
+  become: true
+
+- name: Add the user to the libvirt group
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    append: true
+    groups: libvirt
+  become: true
+
+- name: Start and enable the libvirtd service
+  ansible.builtin.service:
+    name: libvirtd.service
+    state: started
+    enabled: true
+  become: true
+
+- name: Install Virtual Machine Manager
+  ansible.builtin.apt:
+    name: virt-manager
+    state: present
+  become: true

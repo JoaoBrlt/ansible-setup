@@ -129,6 +129,14 @@ def test_postman_installed(host):
   assert result.rc == 0
   assert app_id in result.stdout.splitlines()
 
+def test_libvirt_daemon_system_installed(host):
+  libvirt_daemon_system = host.package("libvirt-daemon-system")
+  assert libvirt_daemon_system.is_installed
+
+def test_virt_manager_installed(host):
+  virt_manager = host.package("virt-manager")
+  assert virt_manager.is_installed
+
 def test_google_chrome_installed(host):
   google_chrome = host.package("google-chrome-stable")
   assert google_chrome.is_installed
