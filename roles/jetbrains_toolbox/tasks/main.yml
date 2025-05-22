@@ -16,7 +16,7 @@
     path: ~/.local/share/JetBrains/Toolbox
   register: jetbrains_toolbox_install_dir
 
-- name: Install JetBrains Toolbox
+- name: Download and install JetBrains Toolbox
   when: not jetbrains_toolbox_install_dir.stat.exists
   block:
     - name: Find all available releases
@@ -48,7 +48,7 @@
           The JetBrains Toolbox version ({{ jetbrains_toolbox_version_override }}) is invalid.
           Available options are {{ jetbrains_toolbox_versions | join(', ') }}.
 
-    - name: Get the release
+    - name: Get the selected release
       ansible.builtin.set_fact:
         jetbrains_toolbox_release: "{{ jetbrains_toolbox_releases.json.TBA | selectattr('version', '==', jetbrains_toolbox_version_override) | first }}"
 
@@ -78,3 +78,24 @@
       ansible.builtin.command: >
         {{ [jetbrains_toolbox_download_dir.path, jetbrains_toolbox_unarchive.files | first, 'jetbrains-toolbox'] | path_join }} --install
       changed_when: true
+
+    - name: Create the desktop launchers directory
+      ansible.builtin.file:
+        path: ~/.local/share/applications
+        state: directory
+        mode: "0700"
+
+    - name: Create the desktop launcher
+      ansible.builtin.template:
+        src: ./templates/jetbrains-toolbox.desktop.j2
+        dest: ~/.local/share/applications/jetbrains-toolbox.desktop
+        mode: "0764"
+
+- name: Set inotify watches limit
+  ansible.posix.sysctl:
+    sysctl_file: /etc/sysctl.d/60-jetbrains.conf
+    name: "fs.inotify.max_user_watches"
+    value: "524288" # Recommended config for JetBrains IDEs
+    state: present
+    reload: true
+  become: true
