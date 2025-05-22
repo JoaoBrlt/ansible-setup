@@ -1,0 +1,6 @@
+---
+- name: Install Color Picker
+  community.general.flatpak:
+    name: nl.hjdskes.gcolor3
+    state: present
+  become: true
