@@ -23,6 +23,17 @@
     mode: "0755"
   become: true
 
+- name: Disable the default Google Chrome config (provided by Ubuntu)
+  ansible.builtin.copy:
+    dest: /etc/default/google-chrome
+    content: |
+      repo_add_once="false"
+      repo_reenable_on_distupgrade="false"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
 - name: Download the Google GPG key
   ansible.builtin.get_url:
     url: https://dl.google.com/linux/linux_signing_key.pub
@@ -45,7 +56,6 @@
     filename: google-chrome
     update_cache: true
     state: present
-  changed_when: false # To avoid the task being marked as changed even when the repository already exists
   become: true
 
 - name: Install Google Chrome
