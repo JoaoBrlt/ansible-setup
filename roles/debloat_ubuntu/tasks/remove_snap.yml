@@ -65,7 +65,8 @@
     path: "{{ item }}"
     state: absent
   loop:
-    - ~/snap
+    - /root/snap
+    - "/home/{{ ansible_user_id }}/snap"
     - /snap
     - /var/snap
     - /var/lib/snapd
