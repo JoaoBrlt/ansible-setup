@@ -29,6 +29,7 @@
     name: libvirtd.service
     state: started
     enabled: true
+  changed_when: false
   become: true
 
 - name: Install Virtual Machine Manager
