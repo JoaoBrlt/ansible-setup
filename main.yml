@@ -45,6 +45,7 @@
 
     # Virtualization tools
     - libvirt
+    - virt_manager
 
     # Applications
     - google_chrome

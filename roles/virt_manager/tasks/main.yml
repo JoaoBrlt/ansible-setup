@@ -1,0 +1,12 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install Virtual Machine Manager
+  ansible.builtin.apt:
+    name: virt-manager
+    state: present
+  become: true

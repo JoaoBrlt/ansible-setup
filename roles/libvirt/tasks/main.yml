@@ -31,9 +31,3 @@
     enabled: true
   changed_when: false
   become: true
-
-- name: Install Virtual Machine Manager
-  ansible.builtin.apt:
-    name: virt-manager
-    state: present
-  become: true
