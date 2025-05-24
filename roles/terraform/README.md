@@ -1,6 +1,6 @@
 # Terraform
 
-Installs [Terraform](https://developer.hashicorp.com/terraform/install).
+Installs [Terraform](https://developer.hashicorp.com/terraform).
 
 ## Examples
 

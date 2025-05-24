@@ -47,6 +47,8 @@
 
     - vagrant_libvirt
 
+    - packer
+
     - terraform
 
     - jetbrains_toolbox

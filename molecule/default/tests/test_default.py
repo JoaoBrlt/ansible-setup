@@ -128,6 +128,10 @@ def test_vagrant_libvirt_installed(host):
   assert vagrant_plugins.rc == 0
   assert "vagrant-libvirt" in vagrant_plugins.stdout
 
+def test_packer_installed(host):
+  packer = host.package("packer")
+  assert packer.is_installed
+
 def test_terraform_installed(host):
   terraform = host.package("terraform")
   assert terraform.is_installed
