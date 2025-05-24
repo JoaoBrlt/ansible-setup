@@ -4,9 +4,11 @@
 
 - [Git](https://git-scm.com/)
 - [Python 3](https://www.python.org/)
-- [Vagrant](https://www.vagrantup.com/)
 - [QEMU](https://www.qemu.org/)
 - [KVM](https://linux-kvm.org/)
+- [libvirt](https://libvirt.org/)
+- [Vagrant](https://www.vagrantup.com/)
+- [Vagrant Libvirt Plugin](https://vagrant-libvirt.github.io/vagrant-libvirt/)
 
 ## Setup
 
