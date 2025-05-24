@@ -37,6 +37,8 @@
 
     - docker
 
+    - vagrant
+
     - jetbrains_toolbox
 
     - gitkraken

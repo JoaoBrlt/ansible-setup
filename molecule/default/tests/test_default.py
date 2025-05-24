@@ -111,6 +111,10 @@ def test_docker_installed(host):
   docker = host.package("docker-ce")
   assert docker.is_installed
 
+def test_vagrant_installed(host):
+  vagrant = host.package("vagrant")
+  assert vagrant.is_installed
+
 def test_jetbrains_toolbox_installed(host):
   env_vars = host.environment()
   install_dir = host.file(env_vars["HOME"] + "/.local/share/JetBrains/Toolbox")
