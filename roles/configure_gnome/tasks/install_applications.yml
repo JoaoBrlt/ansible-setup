@@ -21,6 +21,12 @@
     state: present
   become: true
 
+- name: Install GNOME Firmware
+  ansible.builtin.apt:
+    name: gnome-firmware
+    state: present
+  become: true
+
 - name: Install GNOME Software
   ansible.builtin.apt:
     name: gnome-software
