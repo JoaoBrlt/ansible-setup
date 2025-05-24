@@ -47,6 +47,8 @@
 
     - vagrant_libvirt
 
+    - terraform
+
     - jetbrains_toolbox
 
     - gitkraken

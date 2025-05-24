@@ -128,6 +128,10 @@ def test_vagrant_libvirt_installed(host):
   assert vagrant_plugins.rc == 0
   assert "vagrant-libvirt" in vagrant_plugins.stdout
 
+def test_terraform_installed(host):
+  terraform = host.package("terraform")
+  assert terraform.is_installed
+
 def test_jetbrains_toolbox_installed(host):
   env_vars = host.environment()
   install_dir = host.file(env_vars["HOME"] + "/.local/share/JetBrains/Toolbox")

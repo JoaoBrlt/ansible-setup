@@ -1,6 +1,6 @@
 # Vagrant
 
-Installs [vagrant](https://developer.hashicorp.com/vagrant).
+Installs [Vagrant](https://developer.hashicorp.com/vagrant).
 
 ## Examples
 
