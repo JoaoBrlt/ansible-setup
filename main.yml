@@ -4,6 +4,7 @@
   roles:
     # Prepare
     - debloat_ubuntu
+
     - prepare
 
     # Package managers
@@ -22,6 +23,11 @@
 
     - guake
 
+    # Virtualization tools
+    - libvirt
+
+    - virt_manager
+
     # Development tools
     - role: sdkman
       sdkman_java_versions:
@@ -39,15 +45,13 @@
 
     - vagrant
 
+    - vagrant_libvirt
+
     - jetbrains_toolbox
 
     - gitkraken
 
     - postman
-
-    # Virtualization tools
-    - libvirt
-    - virt_manager
 
     # Applications
     - google_chrome

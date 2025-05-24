@@ -91,6 +91,14 @@ def test_guake_installed(host):
   guake = host.package("guake")
   assert guake.is_installed
 
+def test_libvirt_daemon_system_installed(host):
+  libvirt_daemon_system = host.package("libvirt-daemon-system")
+  assert libvirt_daemon_system.is_installed
+
+def test_virt_manager_installed(host):
+  virt_manager = host.package("virt-manager")
+  assert virt_manager.is_installed
+
 def test_sdkman_installed(host):
   env_vars = host.environment()
   install_dir = host.file(env_vars["HOME"] + "/.sdkman")
@@ -115,6 +123,11 @@ def test_vagrant_installed(host):
   vagrant = host.package("vagrant")
   assert vagrant.is_installed
 
+def test_vagrant_libvirt_installed(host):
+  vagrant_plugins = host.run("vagrant plugin list")
+  assert vagrant_plugins.rc == 0
+  assert "vagrant-libvirt" in vagrant_plugins.stdout
+
 def test_jetbrains_toolbox_installed(host):
   env_vars = host.environment()
   install_dir = host.file(env_vars["HOME"] + "/.local/share/JetBrains/Toolbox")
@@ -132,14 +145,6 @@ def test_postman_installed(host):
   result = host.run("flatpak list --app --columns=application")
   assert result.rc == 0
   assert app_id in result.stdout.splitlines()
-
-def test_libvirt_daemon_system_installed(host):
-  libvirt_daemon_system = host.package("libvirt-daemon-system")
-  assert libvirt_daemon_system.is_installed
-
-def test_virt_manager_installed(host):
-  virt_manager = host.package("virt-manager")
-  assert virt_manager.is_installed
 
 def test_google_chrome_installed(host):
   google_chrome = host.package("google-chrome-stable")

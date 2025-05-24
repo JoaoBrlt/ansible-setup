@@ -1,0 +1,25 @@
+---
+- name: Update the repository cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install the dependencies
+  ansible.builtin.apt:
+    name:
+      - gcc
+      - make
+      - libvirt-dev
+    state: present
+  become: true
+
+- name: Check the installed Vagrant plugins
+  ansible.builtin.command: vagrant plugin list
+  register: vagrant_plugins
+  changed_when: false
+
+- name: Install the Vagrant libvirt plugin
+  ansible.builtin.command: vagrant plugin install vagrant-libvirt
+  when: "'vagrant-libvirt' not in vagrant_plugins.stdout"
+  changed_when: true
