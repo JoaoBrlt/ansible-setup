@@ -26,6 +26,9 @@
 - name: Configure the multitasking options
   ansible.builtin.include_tasks: configure_multitasking.yml
 
+- name: Configure the windows
+  ansible.builtin.include_tasks: configure_windows.yml
+
 - name: Configure the privacy options
   ansible.builtin.include_tasks: configure_privacy.yml
 
