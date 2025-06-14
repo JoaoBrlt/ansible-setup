@@ -1,5 +1,7 @@
 # Ansible Setup
 
+[![CI][ci-badge-url]][ci-workflow-url]
+
 This repository contains the scripts to set up my personal workstation.
 
 ## Supported distributions
@@ -30,3 +32,6 @@ curl -fsSL https://raw.githubusercontent.com/JoaoBrlt/ansible-setup/master/setup
 ## License
 
 This project is licensed under the GPLv3 License - see the [LICENSE](LICENSE) file for details.
+
+[ci-badge-url]: https://github.com/JoaoBrlt/ansible-setup/actions/workflows/ci.yml/badge.svg
+[ci-workflow-url]: https://github.com/JoaoBrlt/ansible-setup/actions/workflows/ci.yml
