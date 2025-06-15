@@ -75,7 +75,7 @@
 
     - name: Install JetBrains Toolbox
       ansible.builtin.command: >
-        {{ [jetbrains_toolbox_download_dir.path, jetbrains_toolbox_unarchive.files | first, 'jetbrains-toolbox'] | path_join }} --install
+        {{ [jetbrains_toolbox_download_dir.path, jetbrains_toolbox_unarchive.files | first, 'bin', 'jetbrains-toolbox'] | path_join }} --install
       changed_when: true
 
     - name: Create the desktop launchers directory
