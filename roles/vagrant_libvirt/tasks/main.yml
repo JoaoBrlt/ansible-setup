@@ -16,10 +16,10 @@
 
 - name: Check the installed Vagrant plugins
   ansible.builtin.command: vagrant plugin list
-  register: vagrant_plugins
+  register: vagrant_libvirt_installed_plugins
   changed_when: false
 
 - name: Install the Vagrant libvirt plugin
   ansible.builtin.command: vagrant plugin install vagrant-libvirt
-  when: "'vagrant-libvirt' not in vagrant_plugins.stdout"
+  when: "'vagrant-libvirt' not in vagrant_libvirt_installed_plugins.stdout"
   changed_when: true

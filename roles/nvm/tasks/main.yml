@@ -15,18 +15,18 @@
 - name: Check the installation directory
   ansible.builtin.stat:
     path: ~/.nvm
-  register: install_dir
+  register: nvm_install_dir
 
 - name: Download the installation script
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh
     dest: /tmp/install_nvm.sh
     mode: "0700"
-  when: not install_dir.stat.exists
+  when: not nvm_install_dir.stat.exists
 
 - name: Install NVM
   ansible.builtin.command: /bin/bash /tmp/install_nvm.sh
-  when: not install_dir.stat.exists
+  when: not nvm_install_dir.stat.exists
   changed_when: true
 
 - name: Synchronize the Node versions

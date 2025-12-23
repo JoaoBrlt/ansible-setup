@@ -3,16 +3,16 @@
   ansible.builtin.shell:
     cmd: command -v snap
     executable: /bin/bash
-  register: is_installed
+  register: debloat_ubuntu_is_installed
   changed_when: false
   failed_when: false # Because Snap can be missing
 
 - name: Remove Snaps
-  when: is_installed.rc == 0
+  when: debloat_ubuntu_is_installed.rc == 0
   block:
     - name: List Snaps
       ansible.builtin.command: snap list
-      register: snap_list
+      register: debloat_ubuntu_snap_list
       changed_when: false
 
     - name: Remove Snaps
@@ -20,7 +20,7 @@
         name: "{{ item | split | first }}"
         state: absent
       failed_when: false # Because some Snaps cannot be removed
-      loop: "{{ snap_list.stdout_lines[1:] }}"
+      loop: "{{ debloat_ubuntu_snap_list.stdout_lines[1:] }}"
       become: true
 
 - name: Get the list of services

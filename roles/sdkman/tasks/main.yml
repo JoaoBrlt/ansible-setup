@@ -18,18 +18,18 @@
 - name: Check the installation directory
   ansible.builtin.stat:
     path: ~/.sdkman
-  register: install_dir
+  register: sdkman_install_dir
 
 - name: Download the installation script
   ansible.builtin.get_url:
     url: https://get.sdkman.io
     dest: /tmp/install_sdkman.sh
     mode: "0700"
-  when: not install_dir.stat.exists
+  when: not sdkman_install_dir.stat.exists
 
 - name: Install SDKMAN
   ansible.builtin.command: /bin/bash /tmp/install_sdkman.sh
-  when: not install_dir.stat.exists
+  when: not sdkman_install_dir.stat.exists
   changed_when: true
 
 - name: Install the Java versions

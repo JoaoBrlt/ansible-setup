@@ -15,8 +15,8 @@
     owner: root
     group: root
     mode: "0644"
-  register: download_result
-  until: download_result is succeeded
+  register: powerlevel10k_download_result
+  until: powerlevel10k_download_result is succeeded
   retries: 5
   delay: 10
   become: true
@@ -28,8 +28,8 @@
     owner: root
     group: root
     mode: "0644"
-  register: download_result
-  until: download_result is succeeded
+  register: powerlevel10k_download_result
+  until: powerlevel10k_download_result is succeeded
   retries: 5
   delay: 10
   become: true
@@ -41,8 +41,8 @@
     owner: root
     group: root
     mode: "0644"
-  register: download_result
-  until: download_result is succeeded
+  register: powerlevel10k_download_result
+  until: powerlevel10k_download_result is succeeded
   retries: 5
   delay: 10
   become: true
@@ -54,8 +54,8 @@
     owner: root
     group: root
     mode: "0644"
-  register: download_result
-  until: download_result is succeeded
+  register: powerlevel10k_download_result
+  until: powerlevel10k_download_result is succeeded
   retries: 5
   delay: 10
   become: true
@@ -84,7 +84,7 @@
     path: ~/.zshrc
     regexp: "source ~/\\.p10k\\.zsh"
     state: absent
-  register: is_config_loaded
+  register: powerlevel10k_is_config_loaded
   check_mode: true
   changed_when: false
 
@@ -94,4 +94,4 @@
     line: |
       # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-  when: is_config_loaded.found == 0
+  when: powerlevel10k_is_config_loaded.found == 0

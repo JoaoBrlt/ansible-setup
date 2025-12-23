@@ -6,7 +6,7 @@
       source ~/.sdkman/bin/sdkman-init.sh
       sdk list java | grep -o "{{ item.version }}.[^ ]*-tem" | head -n 1
     executable: /bin/bash
-  register: java_version
+  register: sdkman_java_version
   changed_when: false
 
 - name: Install JDK ({{ item.version }})
@@ -14,11 +14,11 @@
     cmd: |
       set -o pipefail
       source ~/.sdkman/bin/sdkman-init.sh
-      echo "y" | sdk install java {{ java_version.stdout }}
+      echo "y" | sdk install java {{ sdkman_java_version.stdout }}
     executable: /bin/bash
-  register: java_install
-  changed_when: "'is already installed' not in java_install.stdout"
-  failed_when: "java_install.rc != 0 and 'is already installed' not in java_install.stdout"
+  register: sdkman_java_install
+  changed_when: "'is already installed' not in sdkman_java_install.stdout"
+  failed_when: "sdkman_java_install.rc != 0 and 'is already installed' not in sdkman_java_install.stdout"
 
 - name: Get the default JDK version ({{ item.version }})
   ansible.builtin.shell:
@@ -26,7 +26,7 @@
       source ~/.sdkman/bin/sdkman-init.sh
       sdk current java
     executable: /bin/bash
-  register: default_java_version
+  register: sdkman_default_java_version
   when: item.default | default(false)
   changed_when: false
 
@@ -34,7 +34,7 @@
   ansible.builtin.shell:
     cmd: |
       source ~/.sdkman/bin/sdkman-init.sh
-      sdk default java {{ java_version.stdout }}
+      sdk default java {{ sdkman_java_version.stdout }}
     executable: /bin/bash
   when: item.default | default(false)
-  changed_when: "java_version.stdout not in default_java_version.stdout"
+  changed_when: "sdkman_java_version.stdout not in sdkman_default_java_version.stdout"

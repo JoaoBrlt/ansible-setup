@@ -2,22 +2,22 @@
 - name: Check if the adw-gtk3 theme is already installed
   ansible.builtin.stat:
     path: /usr/share/themes/adw-gtk3
-  register: adw_gtk3_install_dir
+  register: configure_gnome_adw_gtk3_install_dir
 
 - name: Download and install the adw-gtk3 theme
-  when: not adw_gtk3_install_dir.stat.exists
+  when: not configure_gnome_adw_gtk3_install_dir.stat.exists
   block:
     - name: Create a temporary directory
       ansible.builtin.tempfile:
         state: directory
         suffix: ".adw_gtk3"
-      register: adw_gtk3_download_dir
+      register: configure_gnome_adw_gtk3_download_dir
 
     - name: Download adw-gtk3
       ansible.builtin.get_url:
         # Using v5.3 because newer versions require GTK v4.16+ (and Ubuntu Desktop 24.04 uses GTK v4.14)
         url: https://github.com/lassekongo83/adw-gtk3/releases/download/v5.3/adw-gtk3v5.3.tar.xz
-        dest: "{{ adw_gtk3_download_dir.path }}/adw-gtk3.tar.xz"
+        dest: "{{ configure_gnome_adw_gtk3_download_dir.path }}/adw-gtk3.tar.xz"
         owner: root
         group: root
         mode: "0644"
@@ -25,7 +25,7 @@
 
     - name: Extract adw-gtk3
       ansible.builtin.unarchive:
-        src: "{{ adw_gtk3_download_dir.path }}/adw-gtk3.tar.xz"
+        src: "{{ configure_gnome_adw_gtk3_download_dir.path }}/adw-gtk3.tar.xz"
         dest: /usr/share/themes/
         remote_src: true
       become: true
