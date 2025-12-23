@@ -31,6 +31,9 @@ jobs:
       - name: Install the dependencies
         run: pip3 install -r requirements.txt
 
+      - name: Set the required env vars
+        run: source .envrc
+
       - name: Lint the code
         run: ansible-lint
 
@@ -101,6 +104,9 @@ jobs:
 
       - name: Install the dependencies
         run: pip3 install -r requirements.txt
+
+      - name: Set the required env vars
+        run: source .envrc
 
       - name: Test the role
         run: molecule test

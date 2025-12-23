@@ -36,6 +36,19 @@ source .venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
+## Development
+
+- Activate the virtual environment:
+
+```bash
+source .venv/bin/activate
+```
+
+- Set the required environment variables:
+```bash
+source .envrc
+```
+
 ## Lint
 
 - Lint the code:
