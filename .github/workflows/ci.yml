@@ -32,7 +32,11 @@ jobs:
         run: pip3 install -r requirements.txt
 
       - name: Set the required env vars
-        run: source .envrc
+        run: |
+          source .envrc
+          echo "ANSIBLE_FILTER_PLUGINS=$ANSIBLE_FILTER_PLUGINS" >> $GITHUB_ENV
+          echo "ANSIBLE_LIBRARY=$ANSIBLE_LIBRARY" >> $GITHUB_ENV
+          echo "ANSIBLE_ROLES_PATH=$ANSIBLE_ROLES_PATH" >> $GITHUB_ENV
 
       - name: Lint the code
         run: ansible-lint
@@ -106,7 +110,11 @@ jobs:
         run: pip3 install -r requirements.txt
 
       - name: Set the required env vars
-        run: source .envrc
+        run: |
+          source .envrc
+          echo "ANSIBLE_FILTER_PLUGINS=$ANSIBLE_FILTER_PLUGINS" >> $GITHUB_ENV
+          echo "ANSIBLE_LIBRARY=$ANSIBLE_LIBRARY" >> $GITHUB_ENV
+          echo "ANSIBLE_ROLES_PATH=$ANSIBLE_ROLES_PATH" >> $GITHUB_ENV
 
       - name: Test the role
         run: molecule test
