@@ -16,6 +16,6 @@ Installs [SDKMAN](https://sdkman.io/).
   roles:
     - role: sdkman
       sdkman_java_versions:
-        - { version: 17 }
-        - { version: 21, default: true }
+        - { version: 21 }
+        - { version: 25, default: true }
 ```
