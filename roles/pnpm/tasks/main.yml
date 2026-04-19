@@ -8,31 +8,32 @@
 - name: Install the dependencies
   ansible.builtin.apt:
     name:
-      - git
       - curl
+      - tar
+      - unzip
   become: true
 
 - name: Check the installation directory
   ansible.builtin.stat:
-    path: ~/.nvm
-  register: nvm_install_dir
+    path: ~/.local/share/pnpm
+  register: pnpm_install_dir
 
 - name: Download the installation script
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh
-    dest: /tmp/install_nvm.sh
+    url: https://get.pnpm.io/install.sh
+    dest: /tmp/install_pnpm.sh
     mode: "0700"
-  when: not nvm_install_dir.stat.exists
+  when: not pnpm_install_dir.stat.exists
 
-- name: Install NVM
-  ansible.builtin.command: /bin/bash /tmp/install_nvm.sh
-  when: not nvm_install_dir.stat.exists
+- name: Install pnpm
+  ansible.builtin.command: /bin/sh /tmp/install_pnpm.sh
+  when: not pnpm_install_dir.stat.exists
   changed_when: true
 
 - name: Synchronize the Node versions
-  ansible.builtin.command: /bin/bash -ilc 'nvm ls-remote'
+  ansible.builtin.command: /bin/bash -ilc 'pnpm env list --remote'
   changed_when: false
 
 - name: Install the Node versions
   ansible.builtin.include_tasks: install-node.yml
-  loop: "{{ nvm_node_versions }}"
+  loop: "{{ pnpm_node_versions }}"

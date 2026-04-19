@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   roles:
-    - role: nvm
-      nvm_node_versions:
+    - role: pnpm
+      pnpm_node_versions:
         - { version: 22 }
         - { version: 24, default: true }

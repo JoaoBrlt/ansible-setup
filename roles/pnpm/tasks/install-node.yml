@@ -1,0 +1,9 @@
+---
+- name: Install Node ({{ item.version }})
+  ansible.builtin.command: /bin/bash -ilc 'pnpm env add --global {{ item.version }}'
+  changed_when: false
+
+- name: Set the default Node version ({{ item.version }})
+  ansible.builtin.command: /bin/bash -ilc 'pnpm env use --global {{ item.version }}'
+  when: item.default | default(false)
+  changed_when: false

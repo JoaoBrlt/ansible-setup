@@ -16,6 +16,6 @@ Installs [Node Version Manager](https://github.com/nvm-sh/nvm).
   roles:
     - role: nvm
       nvm_node_versions:
-        - { version: 20 }
-        - { version: 22, default: true }
+        - { version: 22 }
+        - { version: 24, default: true }
 ```
