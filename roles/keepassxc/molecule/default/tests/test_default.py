@@ -1,3 +1,5 @@
 def test_keepassxc_installed(host):
-  keepassxc = host.package("keepassxc")
-  assert keepassxc.is_installed
+  app_id = "org.keepassxc.KeePassXC"
+  result = host.run("flatpak list --app --columns=application")
+  assert result.rc == 0
+  assert app_id in result.stdout.splitlines()
