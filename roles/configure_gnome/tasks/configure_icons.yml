@@ -1,22 +1,32 @@
 ---
-- name: Update the repository cache
-  ansible.builtin.apt:
-    update_cache: true
-    cache_valid_time: 3600
-  become: true
+- name: Check if the Papirus icon theme is already installed
+  ansible.builtin.stat:
+    path: /usr/share/icons/Papirus-Dark
+  register: configure_gnome_papirus_icon_theme_install_dir
 
-- name: Add the Papirus repository
-  ansible.builtin.apt_repository:
-    repo: ppa:papirus/papirus
-    update_cache: true
-    state: present
-  become: true
+- name: Download and install the Papirus icon theme
+  when: not configure_gnome_papirus_icon_theme_install_dir.stat.exists
+  block:
+    - name: Create a temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ".papirus_icon_theme"
+      register: configure_gnome_papirus_icon_theme_download_dir
 
-- name: Install Papirus icon theme
-  ansible.builtin.apt:
-    name: papirus-icon-theme
-    state: present
-  become: true
+    - name: Download the installation script
+      ansible.builtin.get_url:
+        url: https://git.io/papirus-icon-theme-install
+        dest: "{{ configure_gnome_papirus_icon_theme_download_dir.path }}/install_papirus.sh"
+        mode: "0700"
+        checksum: sha256:6cd5d3e5b43ef3c81932d79a1a67a19bb1077222c1bb5505fd83b2c671bbba78
+
+    - name: Install the Papirus icon theme
+      ansible.builtin.command: /bin/sh {{ configure_gnome_papirus_icon_theme_download_dir.path }}/install_papirus.sh
+      environment:
+        DESTDIR: "/usr/share/icons"
+        EXTRA_THEMES: "Papirus-Dark Papirus-Light"
+        TAG: "master"
+      changed_when: true
 
 - name: Set the icon theme to "Papirus-Dark"
   community.general.dconf:

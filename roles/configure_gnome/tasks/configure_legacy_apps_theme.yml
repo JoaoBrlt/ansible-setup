@@ -21,6 +21,7 @@
         owner: root
         group: root
         mode: "0644"
+        checksum: sha256:2e6e87935bef30936e40d07c7af4fd20754e77917be224f61c4346867196bef0
       become: true
 
     - name: Extract adw-gtk3
