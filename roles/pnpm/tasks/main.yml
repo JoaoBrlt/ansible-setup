@@ -23,6 +23,7 @@
     url: https://get.pnpm.io/install.sh
     dest: /tmp/install_pnpm.sh
     mode: "0700"
+    checksum: sha256:8c7d3fb84a44342c63fa20c077ea995cca73bd2783ab80d5abe7e46f1702390a
   when: not pnpm_install_dir.stat.exists
 
 - name: Install pnpm

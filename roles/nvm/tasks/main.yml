@@ -19,9 +19,10 @@
 
 - name: Download the installation script
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh
+    url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh
     dest: /tmp/install_nvm.sh
     mode: "0700"
+    checksum: sha256:4b7412c49960c7d31e8df72da90c1fb5b8cccb419ac99537b737028d497aba4f
   when: not nvm_install_dir.stat.exists
 
 - name: Install NVM

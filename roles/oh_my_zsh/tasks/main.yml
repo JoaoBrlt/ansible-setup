@@ -22,6 +22,7 @@
     url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
     dest: /tmp/install_ohmyzsh.sh
     mode: "0700"
+    checksum: sha256:21043aec5b791ce4835479dc33ba2f92155946aeafd54604a8c83522627cc803
   when: not oh_my_zsh_install_dir.stat.exists
 
 - name: Install Oh My Zsh
