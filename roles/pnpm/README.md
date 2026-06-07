@@ -17,5 +17,5 @@ Installs [pnpm](https://pnpm.io/).
     - role: pnpm
       pnpm_node_versions:
         - { version: 22 }
-        - { version: 24, default: true }
+        - { version: 24 }
 ```
