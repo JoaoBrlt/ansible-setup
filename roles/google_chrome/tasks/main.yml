@@ -51,12 +51,21 @@
   become: true
 
 - name: Add the Google Chrome repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/google.gpg] https://dl.google.com/linux/chrome/deb/ stable main"
-    filename: google-chrome
-    update_cache: true
+  ansible.builtin.deb822_repository:
+    name: google-chrome-custom
+    types: deb
+    uris: https://dl.google.com/linux/chrome/deb/
+    suites: stable
+    components: main
+    architectures: amd64
+    signed_by: /etc/apt/keyrings/google.gpg
+    enabled: true
     state: present
+  notify: apt update
   become: true
+
+- name: Flush the handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Install Google Chrome
   ansible.builtin.apt:
