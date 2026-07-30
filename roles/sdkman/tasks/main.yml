@@ -25,7 +25,7 @@
     url: https://get.sdkman.io
     dest: /tmp/install_sdkman.sh
     mode: "0700"
-    checksum: sha256:b8f30097f733941ba30475dfdfeec330e786fc03c0e50ebb1fef019dda67913c
+    checksum: sha256:b7bda3ce24f631d54d6b6b24f9ca32bc0a0e12dde12b2c3c73b1e28c5c36a364
   when: not sdkman_install_dir.stat.exists
 
 - name: Install SDKMAN
