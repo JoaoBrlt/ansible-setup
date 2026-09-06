@@ -32,10 +32,10 @@ jobs:
 
     steps:
       - name: Checkout the project
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Python 3
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: 3.12
           cache: pip
@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Checkout the project
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Detect the roles
         id: detect_roles
@@ -76,7 +76,7 @@ jobs:
 
     steps:
       - name: Checkout the project
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Clean up the runner
         run: |
@@ -152,7 +152,7 @@ jobs:
           vagrant plugin install vagrant-libvirt
 
       - name: Set up Python 3
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: 3.12
           cache: pip
